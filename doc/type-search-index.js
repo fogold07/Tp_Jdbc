@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"fr.diginamic.jdbc","l":"App"},{"p":"fr.diginamic.jdbc.connection","l":"ConnexionBdd"},{"p":"fr.diginamic.jdbc.util","l":"NamedParameterStatement"}];updateSearchResults();
