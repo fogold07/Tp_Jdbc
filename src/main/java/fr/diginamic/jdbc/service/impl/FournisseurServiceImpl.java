@@ -15,9 +15,12 @@ public class FournisseurServiceImpl {
 	 * @param nomFournisseur
 	 */
 	public void creerFournisseur(String nomFournisseur) {
-		Fournisseur founisseur = new Fournisseur(nomFournisseur);
+		Fournisseur fournisseur = new Fournisseur(nomFournisseur);
 		try {
-			fdi.creer(founisseur);
+			fdi.creer(fournisseur);
+			// TODO A basculer dans l'imple creerFournisseur de FournisseurServiImpl
+			System.out.println( fournisseur.getNom() + " ajouté la table Fournisseur");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

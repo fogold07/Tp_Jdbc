@@ -37,8 +37,10 @@ public class Requetes {
 
 	public static final String SUPPR_BON = "DELETE FROM bon WHERE numero =?";
 	
-	public static final String SIMPLE_VUE_BON = "SELECT numero FROM bon";
 	
 	//table Compo
 	//TODO créer les requetes SQL
+	public static final String TOUTES_LES_COMPOS =  "SELECT * FROM compo";
+	
+	public static final String AJOUT_COMPO = "INSERT INTO compo(id_art, id_bon, qte) VALUES (?,?,?)";
 }

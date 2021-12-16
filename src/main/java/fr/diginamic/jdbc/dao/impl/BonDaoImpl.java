@@ -77,16 +77,15 @@ public class BonDaoImpl implements BonDao {
 		try {
 			this.ps = this.con.prepareStatement(Requetes.AJOUT_BON);
 			this.ps.setInt(1, bon.getNumero());
-			this.ps.setDate(2, new java.sql.Date(bon.getDate_cmde().getTime()));
+			this.ps.setDate(2, bon.getDate_cmde());
+			//this.ps.setDate(2, new java.sql.Date(bon.getDate_cmde().getTime()));
 			this.ps.setInt(3, bon.getDelai());
 			this.ps.setInt(4, bon.getId_fou());
-			int nb = this.ps.executeUpdate();
 			
-			System.out.println(this.ps.toString());
+			//int nb = this.ps.executeUpdate();
 			
-			
-			
-			System.out.println(nb + " ligne ajoutée dans la table bon");
+			//System.out.println(this.ps.toString());
+			//System.out.println(nb + " ligne ajoutée dans la table bon");
 			
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
@@ -106,8 +105,8 @@ public class BonDaoImpl implements BonDao {
 	public int update(Bon bon) throws SQLException {
 		try {
 			this.ps = this.con.prepareStatement(Requetes.UPDATE_BON);
-			
-			this.ps.setDate(1, new java.sql.Date(bon.getDate_cmde().getTime()));
+			this.ps.setDate(1, bon.getDate_cmde());
+			//this.ps.setDate(1, new java.sql.Date(bon.getDate_cmde().getTime()));
 			this.ps.setInt(2, bon.getDelai());
 			this.ps.setInt(3, bon.getId_fou());
 			this.ps.setInt(4, bon.getNumero());
@@ -169,26 +168,6 @@ public class BonDaoImpl implements BonDao {
 		}
 		return null;
 	}
-
-	@Override
-	public void simpleView() throws SQLException {
-		try {
-			this.ps = this.con.prepareStatement(Requetes.SIMPLE_VUE_BON);
-			this.rs = this.ps.executeQuery();
-			System.out.println("Vue simplifiée des bons: ");
-			//add de rs.getString pour gérer affichage
-			while (rs.next()) {
-				System.out.println("[N° bon: " + rs.getString("numero") + " ]");
-			}
-		} finally {
-			if (this.ps != null && !this.ps.isClosed()) {
-				this.ps.close();
-			}
-
-		}
-		
-	}
-
 
 
 }

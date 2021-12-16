@@ -74,6 +74,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	/**
 	 * méthode qui permet de créer un article en BdD
+	 * @param article
 	 */
 	@Override
 	public void creer(Article article) throws SQLException {

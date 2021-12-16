@@ -6,6 +6,12 @@ public class Compo {
 	private int id_bon;
 	private int qte;
 	
+	
+	
+	public Compo() {
+		super();
+	}
+
 	public Compo(int id_art, int id_bon, int qte) {
 		super();
 		this.id_art = id_art;

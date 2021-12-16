@@ -40,7 +40,7 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
  * 
  *         La validation des informations se fait par la touche Entrée
  **/
-public class App {
+public class AppTest {
 
 	/**
 	 * Point principal à gérer pour notre TP

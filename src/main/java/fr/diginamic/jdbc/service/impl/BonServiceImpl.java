@@ -3,6 +3,7 @@ package fr.diginamic.jdbc.service.impl;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.dao.BonDao;
@@ -19,14 +20,15 @@ public class BonServiceImpl {
 	public void creerBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
 
 		// conversion du String en sql.date
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
-		java.util.Date date = sdf1.parse(dateStr);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		java.util.Date date = sdf.parse(dateStr);
 		java.sql.Date dateSql = new java.sql.Date(date.getTime());
 		
 		
 		Bon bon = new Bon(numero, dateSql, delai, id_fou);
 		try {
 			bdi.creer(bon);
+			System.out.println("ligne ajoutée dans la table bon");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,18 +60,55 @@ public class BonServiceImpl {
 		
 	}
 	
-	/** Méthode qui renvoie la liste des bons
+	/** Méthode qui renvoie la liste de tous les bons
 	 * @return List des bons
 	 */
-	public List<Bon> recupererBons() {
+	public void recupererBons(int paramSousMenu) {
 		try {
-			return bdi.extraire();
+			List<Bon> bons = new ArrayList<>();
+			bons = bdi.extraire();
+			if (paramSousMenu == 5) {
+				for (Bon bon : bons) {
+					System.out.println("[N° bon: " + bon.getNumero()+ " ]");
+				}
+			}
+			
+			if(paramSousMenu == 4) {
+				for (Bon bon : bons) {
+					System.out.println(bon);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
 	}
 	
+	// METHODE TEST A SUPPRIMMER APRES
+	/** Méthode qui renvoie la liste des bons
+	 * @return List des bons
+	 */
+	public void recupererBonsTest(int paramSousMenu) {
+		try {
+			List<Bon> bons = new ArrayList<>();
+			bons = bdi.extraire();
+			if (paramSousMenu == 5) {
+				for (Bon bon : bons) {
+					System.out.println("[N° bon: " + bon.getNumero()+ " ]");
+				}
+			}
+			
+			if(paramSousMenu == 4) {
+				for (Bon bon : bons) {
+					System.out.println(bon);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	/** Méthode qui supprime le bon du numéro saisie par l'User
 	 * @param numéro du bon
@@ -101,15 +140,4 @@ public class BonServiceImpl {
 		
 	}
 
-	/** Méthode qui affiche une vue simplifiée des bons
-	 * (numéro de bon)
-	 */
-	public void vueSimplifie() {
-		try {
-			bdi.simpleView();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

@@ -1,6 +1,8 @@
 package fr.diginamic.jdbc.entites;
 
-import java.util.Date;
+import java.sql.Date;
+
+//import java.util.Date;
 
 public class Bon {
 	private int id; 
@@ -17,7 +19,7 @@ public class Bon {
 	public Bon(int numero, int delai, int id_fou) {
 		super();
 		this.numero = numero;
-		this.date_cmde = new Date();
+		this.date_cmde = new java.sql.Date((new java.util.Date()).getTime());
 		this.delai = delai;
 		this.id_fou = id_fou;
 	}

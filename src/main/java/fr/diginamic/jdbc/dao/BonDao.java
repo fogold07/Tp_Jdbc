@@ -11,5 +11,4 @@ public interface BonDao {
 	int update(Bon bon) throws SQLException;
 	boolean delete(int numeroBon) throws SQLException;
 	Bon findOne(int numeroBon) throws SQLException;
-	void simpleView() throws SQLException;
 }
