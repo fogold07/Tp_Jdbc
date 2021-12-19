@@ -1,6 +1,7 @@
 package fr.diginamic.jdbc.service.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.dao.ArticleDao;
@@ -21,6 +22,7 @@ public class ArticleServiceImpl {
 		Article article = new Article(ref, designation, prix, id_fou);
 		try {
 			adi.creer(article);
+			System.out.println("Article " + article.getRef() + " ajouté dans la table.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,71 +36,76 @@ public class ArticleServiceImpl {
 	 * @param designation
 	 * @param prix
 	 * @param id_fou
-	 * @return int nb article mis à jour
 	 */
-	public int updateArticle(String ref, String designation, double prix, int id_fou) {
+	public void updateArticle(String ref, String designation, double prix, int id_fou) {
 		Article article = new Article(designation, prix, id_fou);
 		try {
 			article.setRef(ref);
-			return adi.update(article);
+			int nb = adi.update(article);
+			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
+			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
 		
 	}
 	
 	/** Méthode qui renvoie la liste des articles
-	 * @return List des articles
+	 * @param paramSousMenu as int (choix du sous menu)
 	 */
-	public List<Article> recupererArticles() {
+	public void recupererArticles(int paramSousMenu) {
+		List<Article> articles = new ArrayList<>();
 		try {
-			return adi.extraire();
+			articles = adi.extraire();
+			switch (paramSousMenu) {
+			case 4:
+				for (Article article : articles) {
+					System.out.println(article);
+				}
+				break;
+			case 2:
+			case 3:
+			case 5:
+				for (Article article : articles) {
+					System.out.println("[REF: " + article.getRef() + " -> " + article.getDesignation() + " ]");
+				}
+				break;
+			default:
+				break;
+			}			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 	
 
 	/** Méthode qui supprime l'article de la ref saisie par l'User
 	 * @param ref article
-	 * @return boolean
 	 */
-	public boolean supprimerArticle(String ref) {
+	public void supprimerArticle(String ref) {
 		try {
-			return adi.delete(ref);
+			String str;
+			str = adi.delete(ref)? ref+" supprimé." : "DELETE FAILED !" ;
+			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return false;
 		
 	}
 	
 	/** Méthode qui affiche le fournisseur dont l'User veut le détail
 	 * @param ref article
-	 * @return article
 	 */
-	public Article visualiser(String ref) {
+	public void visualiser(String ref) {
 		try {
-			return adi.findOne(ref);
+			String str = adi.findOne(ref)!=null?adi.findOne(ref).toString():"NOT FOUND !";
+			System.out.println(str);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 		
 	}
 
-	/** Méthode qui renvoie une vue simplifiée des articles
-	 *  (ref et désignation)
-	 */
-	public void vueSimplifie() {
-		try {
-			adi.simpleView();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

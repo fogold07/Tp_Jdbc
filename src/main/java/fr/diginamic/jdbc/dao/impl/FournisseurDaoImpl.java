@@ -75,10 +75,7 @@ public class FournisseurDaoImpl implements FournisseurDao {
 		try {
 			this.ps = this.con.prepareStatement(Requetes.AJOUT_FOURNISSEUR);
 			this.ps.setString(1, fournisseur.getNom());
-			int nb = this.ps.executeUpdate();
-			
-			// TODO A basculer dans l'imple creerFournisseur de FournisseurServiImpl
-			//System.out.println(nb + " nouvelle entrée. " + fournisseur.getNom() + " ajouté la table Fournisseur");
+			this.ps.executeUpdate();
 			
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
@@ -132,7 +129,7 @@ public class FournisseurDaoImpl implements FournisseurDao {
 	}
 
 	/**
-	 * Méthode qui renvoie les inforamtions d'un article
+	 * Méthode qui renvoie les informations d'un article
 	 * @param nomFournisseur as String
 	 * @return fournisseur as Fournisseur
 	 */

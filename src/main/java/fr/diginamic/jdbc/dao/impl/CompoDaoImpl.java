@@ -90,4 +90,19 @@ public class CompoDaoImpl implements CompoDao {
 		
 	}
 
+	@Override
+	public boolean delete(int idComp) throws SQLException {
+		try {
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_COMPO);
+			this.ps.setInt(1, idComp);
+			int nb = this.ps.executeUpdate();
+			return nb > 0 ? true : false;
+
+		} finally {
+			if(this.ps != null && !this.ps.isClosed()) {
+				this.ps.close();
+			}
+		}
+	}
+
 }

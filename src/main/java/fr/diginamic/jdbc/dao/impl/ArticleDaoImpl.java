@@ -84,9 +84,8 @@ public class ArticleDaoImpl implements ArticleDao {
 			this.ps.setString(2, article.getDesignation());
 			this.ps.setDouble(3, article.getPrix());
 			this.ps.setInt(4, article.getId_fou());
-			int nb = this.ps.executeUpdate();
-			System.out.println(nb + " ligne ajoutée dans la table article");
-
+			this.ps.executeUpdate();
+			
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
@@ -166,23 +165,6 @@ public class ArticleDaoImpl implements ArticleDao {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void simpleView() throws SQLException {
-		try {
-			this.ps = this.con.prepareStatement(Requetes.SIMPLE_VUE_ARTICLE);
-			this.rs = this.ps.executeQuery();
-			System.out.println("Vue simplifiée des articles: ");
-			while (rs.next()) {
-				System.out.println("[REF: " + rs.getString("ref") + " -> " + rs.getString("designation") + " ]");
-			}
-		} finally {
-			if (this.ps != null && !this.ps.isClosed()) {
-				this.ps.close();
-			}
-
-		}
 	}
 
 }

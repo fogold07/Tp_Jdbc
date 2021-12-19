@@ -24,11 +24,10 @@ public class BonServiceImpl {
 		java.util.Date date = sdf.parse(dateStr);
 		java.sql.Date dateSql = new java.sql.Date(date.getTime());
 		
-		
 		Bon bon = new Bon(numero, dateSql, delai, id_fou);
 		try {
 			bdi.creer(bon);
-			System.out.println("ligne ajoutée dans la table bon");
+			System.out.println("Bon n°" + bon.getNumero()+" ajouté à la table");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,103 +39,95 @@ public class BonServiceImpl {
 	 * @param dateStr
 	 * @param delai
 	 * @param id_fou
-	 * @return int nb bon mis à jour
 	 * @throws ParseException
 	 */
-	public int updateBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
+	public void updateBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
 		// conversion du String en sql.date
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 		java.util.Date date = sdf1.parse(dateStr);
 		java.sql.Date dateSql = new java.sql.Date(date.getTime());
-		
+		int nb;
 		Bon bon = new Bon(numero, dateSql, delai, id_fou);
 		try {
 			bon.setNumero(numero);
-			return bdi.update(bon);
+			nb = bdi.update(bon);
+			if (nb > 0) {
+				System.out.println(nb + " ligne update. Bon n°" + numero + " mis à jour.");
+			}
+			else {
+				System.out.println("UPDATE FAILED !");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return 0;
-		
+		}		
 	}
 	
 	/** Méthode qui renvoie la liste de tous les bons
-	 * @return List des bons
+	 * @param paramSousMenu as int (choix du sous menu)
 	 */
 	public void recupererBons(int paramSousMenu) {
+		List<Bon> bons = new ArrayList<>();
 		try {
-			List<Bon> bons = new ArrayList<>();
 			bons = bdi.extraire();
-			if (paramSousMenu == 5) {
-				for (Bon bon : bons) {
-					System.out.println("[N° bon: " + bon.getNumero()+ " ]");
-				}
-			}
 			
-			if(paramSousMenu == 4) {
+			switch (paramSousMenu) {
+			case 4:
 				for (Bon bon : bons) {
 					System.out.println(bon);
 				}
+				break;
+			case 2:
+			case 3:
+			case 5:
+				for (Bon bon : bons) {
+					System.out.println("[N° bon: " + bon.getNumero()+ " ]");
+				}
+				break;
+			default:
+				System.out.println("WRONG VALUE !");
+				break;
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-	}
-	
-	// METHODE TEST A SUPPRIMMER APRES
-	/** Méthode qui renvoie la liste des bons
-	 * @return List des bons
-	 */
-	public void recupererBonsTest(int paramSousMenu) {
-		try {
-			List<Bon> bons = new ArrayList<>();
-			bons = bdi.extraire();
-			if (paramSousMenu == 5) {
-				for (Bon bon : bons) {
-					System.out.println("[N° bon: " + bon.getNumero()+ " ]");
-				}
-			}
-			
-			if(paramSousMenu == 4) {
-				for (Bon bon : bons) {
-					System.out.println(bon);
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/** Méthode qui supprime le bon du numéro saisie par l'User
 	 * @param numéro du bon
-	 * @return boolean
 	 */
-	public boolean supprimerBon(int numeroBon) {
+	public void supprimerBon(int numeroBon) {
 		try {
-			return bdi.delete(numeroBon);
+			
+			boolean isDelete = bdi.delete(numeroBon);
+			if (isDelete) {
+				System.out.println("Bon # " + numeroBon + " supprimé de la table");
+			} else {
+				System.out.println("DELETE FAILED !");
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return false;
-		
+			
 	}
 	
 
-	/** Méthode qui affiche le bon dont l'User veut le détail
-	 * @param numeroBon
-	 * @return bon
+	/** Méthode qui affiche le bon dont l'User veut avoir le détail
+	 * @param numeroBon as int 
 	 */
-	public Bon visualiser(int numeroBon) {
+	public void visualiser(int numeroBon) {
 		try {
-			return bdi.findOne(numeroBon);
+			if (bdi.findOne(numeroBon) == null) {
+				System.out.println("NOT FOUND !");
+			} else {
+				System.out.println(bdi.findOne(numeroBon));
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 		
 	}
 

@@ -3,6 +3,7 @@ package fr.diginamic.jdbc.service.impl;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.dao.FournisseurDao;
@@ -18,8 +19,7 @@ public class FournisseurServiceImpl {
 		Fournisseur fournisseur = new Fournisseur(nomFournisseur);
 		try {
 			fdi.creer(fournisseur);
-			// TODO A basculer dans l'imple creerFournisseur de FournisseurServiImpl
-			System.out.println( fournisseur.getNom() + " ajouté la table Fournisseur");
+			System.out.println( "Fournisseur " + fournisseur.getNom() + " ajouté la table.");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -28,58 +28,57 @@ public class FournisseurServiceImpl {
 	}
 	
 	/** Méthode qui récupère la saisie de l'User pour la mise à jour d'un fournisseur
-	 * @param ancienNom
-	 * @param nouveauNom
-	 * @return int (nbre de ligne mise à jour)
+	 * @param ancienNom as String
+	 * @param nouveauNom as String
 	 */
-	public int updateFournisseur(String ancienNom, String nouveauNom) {
+	public void updateFournisseur(String ancienNom, String nouveauNom) {
+		int nb;
 		try {
-			return fdi.update(ancienNom, nouveauNom);
+			nb = fdi.update(ancienNom, nouveauNom);
+			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
+			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
 		
 	}
 	
-	/** Méthode qui renvoie la liste des fournisseurs
-	 * @return List des fournisseurs
+	/** Méthode qui renvoie la liste des fournisseurs.
 	 */
-	public List<Fournisseur> recupererFournisseurs() {
+	public void recupererFournisseurs() {
 		try {
-			return fdi.extraire();
+			List<Fournisseur> fournisseurs = new ArrayList<>();
+			fournisseurs = fdi.extraire();
+			for (Fournisseur fournisseur : fournisseurs) {
+				System.out.println(fournisseur);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 	
 	/** Méthode qui supprime le fournisseur saisi par l'User
 	 * @param nomFournisseur
-	 * @return boolean si oui ou non fournisseur supprimé
 	 */
-	public boolean supprimerFournisseur(String nomFournisseur) {
+	public void supprimerFournisseur(String nomFournisseur) {
 		try {
-			return fdi.delete(nomFournisseur);
+			String str = fdi.delete(nomFournisseur) ? nomFournisseur + " supprimé." : "DELETE FAILED !";
+			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
-		return false;
-		
+		}		
 	}
 	
 	/** Méthode qui affiche le fournisseur dont l'User veut le détail
 	 * @param nomFournisseur
-	 * @return fournisseur
 	 */
-	public Fournisseur visualiser(String nomFournisseur) {
+	public void visualiser(String nomFournisseur) {
 		try {
-			return fdi.findOne(nomFournisseur);
+			String str = fdi.findOne(nomFournisseur) != null ? fdi.findOne(nomFournisseur).toString() : "NOT FOUND !";
+			System.out.println(str);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return null;
-		
+		}		
 	}
 }

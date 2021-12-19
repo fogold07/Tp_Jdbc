@@ -11,7 +11,6 @@ public interface ArticleDao {
 	int update(Article article) throws SQLException;
 	boolean delete(String ref) throws SQLException;
 	Article findOne(String ref) throws SQLException;
-	void simpleView() throws SQLException;
 	
 }
 

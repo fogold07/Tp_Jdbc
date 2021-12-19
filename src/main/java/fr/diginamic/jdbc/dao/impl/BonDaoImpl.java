@@ -69,7 +69,7 @@ public class BonDaoImpl implements BonDao {
 	}
 
 	/**
-	 * méthode qui permet de créer un article en BdD
+	 * Méthode qui permet de créer un article en BdD
 	 */
 	@Override
 	public void creer(Bon bon) throws SQLException {
@@ -80,12 +80,8 @@ public class BonDaoImpl implements BonDao {
 			this.ps.setDate(2, bon.getDate_cmde());
 			//this.ps.setDate(2, new java.sql.Date(bon.getDate_cmde().getTime()));
 			this.ps.setInt(3, bon.getDelai());
-			this.ps.setInt(4, bon.getId_fou());
-			
-			//int nb = this.ps.executeUpdate();
-			
-			//System.out.println(this.ps.toString());
-			//System.out.println(nb + " ligne ajoutée dans la table bon");
+			this.ps.setInt(4, bon.getId_fou());		
+			this.ps.executeUpdate();		
 			
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
@@ -112,10 +108,6 @@ public class BonDaoImpl implements BonDao {
 			this.ps.setInt(4, bon.getNumero());
 			
 			int nb = this.ps.executeUpdate();
-			
-			//System.out.println(this.ps.toString());
-			
-			//System.out.println(nb +" Bon update");
 			
 			return nb;
 		} finally {

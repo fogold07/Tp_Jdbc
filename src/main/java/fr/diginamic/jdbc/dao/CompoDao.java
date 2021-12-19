@@ -11,5 +11,5 @@ public interface CompoDao {
 	List<Compo> extraire() throws SQLException;
 	void creer(Compo compo) throws SQLException;
 	//int update(String ancienNom , String nouveauNom) throws SQLException;
-	//boolean delete(int idComp) throws SQLException;
+	boolean delete(int idComp) throws SQLException;
 }

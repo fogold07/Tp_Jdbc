@@ -1,6 +1,7 @@
 package fr.diginamic.jdbc.service.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.dao.ArticleDao;
@@ -16,6 +17,11 @@ import fr.diginamic.jdbc.entites.Compo;
 public class CompoServiceImpl {
 	private CompoDao cdi = new CompoDaoImpl();
 	
+	/** Méthode qui crée une compo à partir des éléments saisis en console
+	 * @param ref
+	 * @param numeroBon
+	 * @param qte
+	 */
 	public void creerCompo(String ref, int numeroBon, int qte) {
 
 		ArticleDao adi = new ArticleDaoImpl();
@@ -27,19 +33,44 @@ public class CompoServiceImpl {
 
 			Compo compo = new Compo(art.getId(), bon.getId(), qte);
 			cdi.creer(compo);
+			System.out.println("Compo ajouté à la table !");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
 	
-	public List<Compo> recupererCompos() {
+	
+	/** Méthode qui affiche la liste de toutes les compos
+	 * 
+	 */
+	public void recupererCompos() {
+		List<Compo> compos = new ArrayList<Compo>();
+		
 		try {
-			return cdi.extraire();
+			compos = cdi.extraire();
+			compos.stream().forEach(c -> System.out.println(c));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+	}
+	
+	public void supprimerCompo(int idCompo) {
+		try {
+			
+			boolean isDelete = cdi.delete(idCompo);
+			if (isDelete) {
+				System.out.println("Compo # " + idCompo + " supprimée de la table");
+			} else {
+				System.out.println("DELETE FAILED !");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
 	}
 
 }

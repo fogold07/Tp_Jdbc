@@ -23,9 +23,7 @@ public class Requetes {
 	public static final String UPDATE_ARTICLE = "UPDATE article SET designation=?, prix=?, id_fou=?  WHERE ref=?";
 
 	public static final String SUPPR_ARTICLE = "DELETE FROM article WHERE ref =?";
-	
-	public static final String SIMPLE_VUE_ARTICLE = "SELECT ref, designation FROM article";
-	
+		
 	//table Bon
 	public static final String TOUS_LES_BONS = "SELECT * FROM bon";
 	
@@ -39,8 +37,9 @@ public class Requetes {
 	
 	
 	//table Compo
-	//TODO créer les requetes SQL
 	public static final String TOUTES_LES_COMPOS =  "SELECT * FROM compo";
 	
 	public static final String AJOUT_COMPO = "INSERT INTO compo(id_art, id_bon, qte) VALUES (?,?,?)";
+	
+	public static final String SUPPR_COMPO = "DELETE FROM compo WHERE id =?";
 }
