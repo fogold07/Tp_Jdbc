@@ -42,4 +42,6 @@ public class Requetes {
 	public static final String AJOUT_COMPO = "INSERT INTO compo(id_art, id_bon, qte) VALUES (?,?,?)";
 	
 	public static final String SUPPR_COMPO = "DELETE FROM compo WHERE id =?";
+
+	public static final String UPDATE_COMPO = "UPDATE compo SET id_art=?, id_bon=?, qte=? WHERE id=?";
 }

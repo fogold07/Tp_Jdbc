@@ -57,6 +57,29 @@ public class CompoServiceImpl {
 		}
 	}
 	
+	/** Méthode qui met à jour la compo avec les informations saisies en console
+	 * @param idCompo
+	 * @param id_art
+	 * @param id_bon
+	 * @param qte
+	 */
+	public void updateCompo(int idCompo, int id_art, int id_bon, int qte) {
+		Compo c = new Compo(idCompo, id_art, id_bon, qte);
+		int nb; 
+		try {
+			nb = cdi.update(c);
+			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
+			System.out.println(str);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**Méthode qui supprime la compo dont l'id est saisi.
+	 * @param idCompo
+	 */
 	public void supprimerCompo(int idCompo) {
 		try {
 			

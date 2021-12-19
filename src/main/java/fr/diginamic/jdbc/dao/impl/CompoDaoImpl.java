@@ -13,11 +13,11 @@ import fr.diginamic.jdbc.dao.Requetes;
 import fr.diginamic.jdbc.entites.Compo;
 
 public class CompoDaoImpl implements CompoDao {
-	
+
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	
+
 	/**
 	 * Etablissement de la connexion dans le constructeur
 	 * 
@@ -41,8 +41,10 @@ public class CompoDaoImpl implements CompoDao {
 		if (this.con != null)
 			this.con.close();
 	}
-	
-	/** Méthode qui renvoie toutes les compos en base de données
+
+	/**
+	 * Méthode qui renvoie toutes les compos en base de données
+	 * 
 	 * @return List Compos
 	 */
 	@Override
@@ -69,8 +71,10 @@ public class CompoDaoImpl implements CompoDao {
 		}
 	}
 
-	/**Méthode qui crée une compo en base de données
-	 *@param compo
+	/**
+	 * Méthode qui crée une compo en base de données
+	 * 
+	 * @param compo
 	 */
 	@Override
 	public void creer(Compo compo) throws SQLException {
@@ -80,16 +84,22 @@ public class CompoDaoImpl implements CompoDao {
 			this.ps.setInt(2, compo.getId_bon());
 			this.ps.setInt(3, compo.getQte());
 			int nb = this.ps.executeUpdate();
-			System.out.println(nb +" ligne ajoutée dans la table compo");
-			
+			System.out.println(nb + " ligne ajoutée dans la table compo");
+
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
 			}
 		}
-		
+
 	}
 
+	/**
+	 * Méthode qui supprime une composition dont l'id est passé en paramètre et
+	 * retour si oui ou non la suppression a eu lieu
+	 * @param idCompo as int
+	 * @return boolean
+	 */
 	@Override
 	public boolean delete(int idComp) throws SQLException {
 		try {
@@ -98,6 +108,28 @@ public class CompoDaoImpl implements CompoDao {
 			int nb = this.ps.executeUpdate();
 			return nb > 0 ? true : false;
 
+		} finally {
+			if (this.ps != null && !this.ps.isClosed()) {
+				this.ps.close();
+			}
+		}
+	}
+
+	/**Méthode qui met à jour une compo
+	 *@param compo
+	 *@return nb ligne mise à jour
+	 */
+	@Override
+	public int update(Compo compo) throws SQLException {
+		try {
+			this.ps = this.con.prepareStatement(Requetes.UPDATE_COMPO);
+			this.ps.setInt(1, compo.getId_art());
+			this.ps.setInt(2, compo.getId_bon());
+			this.ps.setInt(3, compo.getQte());
+			this.ps.setInt(4, compo.getId());
+			
+			int nb = this.ps.executeUpdate();
+			return nb;
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();

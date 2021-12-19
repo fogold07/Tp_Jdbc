@@ -101,7 +101,7 @@ public class App {
 
 				// Compo
 				case 4:
-					System.out.println("Choisir action sur la table Compo : 1 = Créer, 2 = Supprimer, 3 = Liste complète.");
+					System.out.println("Choisir action sur la table Compo : 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète.");
 					sousMenu = Integer.parseInt(scanner.nextLine());
 					CompoGetMenu.traiterCompo(sousMenu);
 					break;
