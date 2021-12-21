@@ -13,8 +13,9 @@ import fr.diginamic.jdbc.dao.impl.CompoDaoImpl;
 import fr.diginamic.jdbc.entites.Article;
 import fr.diginamic.jdbc.entites.Bon;
 import fr.diginamic.jdbc.entites.Compo;
+import fr.diginamic.jdbc.service.CompoService;
 
-public class CompoServiceImpl {
+public class CompoServiceImpl implements CompoService {
 	private CompoDao cdi = new CompoDaoImpl();
 	
 	/** Méthode qui crée une compo à partir des éléments saisis en console
@@ -22,6 +23,7 @@ public class CompoServiceImpl {
 	 * @param numeroBon
 	 * @param qte
 	 */
+	@Override
 	public void creerCompo(String ref, int numeroBon, int qte) {
 
 		ArticleDao adi = new ArticleDaoImpl();
@@ -33,7 +35,7 @@ public class CompoServiceImpl {
 
 			Compo compo = new Compo(art.getId(), bon.getId(), qte);
 			cdi.creer(compo);
-			System.out.println("Compo ajouté à la table !");
+			System.out.println("Compo ajoutée à la table !");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -45,6 +47,7 @@ public class CompoServiceImpl {
 	/** Méthode qui affiche la liste de toutes les compos
 	 * 
 	 */
+	@Override
 	public void recupererCompos() {
 		List<Compo> compos = new ArrayList<Compo>();
 		
@@ -63,6 +66,7 @@ public class CompoServiceImpl {
 	 * @param id_bon
 	 * @param qte
 	 */
+	@Override
 	public void updateCompo(int idCompo, int id_art, int id_bon, int qte) {
 		Compo c = new Compo(idCompo, id_art, id_bon, qte);
 		int nb; 
@@ -80,6 +84,7 @@ public class CompoServiceImpl {
 	/**Méthode qui supprime la compo dont l'id est saisi.
 	 * @param idCompo
 	 */
+	@Override
 	public void supprimerCompo(int idCompo) {
 		try {
 			

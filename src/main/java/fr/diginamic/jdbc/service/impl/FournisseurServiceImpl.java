@@ -1,20 +1,23 @@
 package fr.diginamic.jdbc.service.impl;
 
-import fr.diginamic.jdbc.entites.Fournisseur;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.dao.FournisseurDao;
 import fr.diginamic.jdbc.dao.impl.FournisseurDaoImpl;
+import fr.diginamic.jdbc.entites.Fournisseur;
+import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
+import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
+import fr.diginamic.jdbc.service.FournisseurService;
 
-public class FournisseurServiceImpl {
+public class FournisseurServiceImpl implements FournisseurService {
 	private FournisseurDao fdi = new FournisseurDaoImpl();
 	
 	/** Méthode qui récupère la saisie l'User et crée le fournisseur
 	 * @param nomFournisseur
 	 */
+	@Override
 	public void creerFournisseur(String nomFournisseur) {
 		Fournisseur fournisseur = new Fournisseur(nomFournisseur);
 		try {
@@ -27,16 +30,23 @@ public class FournisseurServiceImpl {
 
 	}
 	
-	/** Méthode qui récupère la saisie de l'User pour la mise à jour d'un fournisseur
+	/** 
+	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un fournisseur
 	 * @param ancienNom as String
 	 * @param nouveauNom as String
+	 * @throws FournisseurUpdateException 
 	 */
-	public void updateFournisseur(String ancienNom, String nouveauNom) {
+	@Override
+	public void updateFournisseur(String ancienNom, String nouveauNom) throws FournisseurUpdateException {
 		int nb;
 		try {
 			nb = fdi.update(ancienNom, nouveauNom);
-			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
-			System.out.println(str);
+			if (nb <= 0) {
+				throw new FournisseurUpdateException();
+			}
+
+			System.out.println(nb + " ligne update");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -45,6 +55,7 @@ public class FournisseurServiceImpl {
 	
 	/** Méthode qui renvoie la liste des fournisseurs.
 	 */
+	@Override
 	public void recupererFournisseurs() {
 		try {
 			List<Fournisseur> fournisseurs = new ArrayList<>();
@@ -57,13 +68,23 @@ public class FournisseurServiceImpl {
 		}
 	}
 	
-	/** Méthode qui supprime le fournisseur saisi par l'User
+	/** 
+	 * Méthode qui supprime le fournisseur saisi par l'User.
+	 * Elle supprime également tous les articles, les bons et les compos liés au fournisseur le cas échéant.
 	 * @param nomFournisseur
+	 * @throws FournisseurNotFoundException 
 	 */
-	public void supprimerFournisseur(String nomFournisseur) {
+	@Override
+	public void supprimerFournisseur(String nomFournisseur) throws FournisseurNotFoundException {
 		try {
-			String str = fdi.delete(nomFournisseur) ? nomFournisseur + " supprimé." : "DELETE FAILED !";
+			if(fdi.findOne(nomFournisseur)==null) {
+				throw new FournisseurNotFoundException();
+			}
+			Fournisseur f = fdi.findOne(nomFournisseur);
+
+			String str = fdi.delete(f) ? nomFournisseur + " supprimé." : "DELETE FAILED !";
 			System.out.println(str);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -71,10 +92,15 @@ public class FournisseurServiceImpl {
 	
 	/** Méthode qui affiche le fournisseur dont l'User veut le détail
 	 * @param nomFournisseur
+	 * @throws FournisseurNotFoundException 
 	 */
-	public void visualiser(String nomFournisseur) {
+	@Override
+	public void visualiser(String nomFournisseur) throws FournisseurNotFoundException {
 		try {
-			String str = fdi.findOne(nomFournisseur) != null ? fdi.findOne(nomFournisseur).toString() : "NOT FOUND !";
+			if(fdi.findOne(nomFournisseur)==null) {
+				throw new FournisseurNotFoundException();
+			}
+			String str = fdi.findOne(nomFournisseur).toString();
 			System.out.println(str);
 			
 		} catch (SQLException e) {

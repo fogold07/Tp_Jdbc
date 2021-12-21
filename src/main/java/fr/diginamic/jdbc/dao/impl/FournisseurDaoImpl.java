@@ -11,10 +11,12 @@ import fr.diginamic.jdbc.connection.ConnexionBdd;
 import fr.diginamic.jdbc.dao.FournisseurDao;
 import fr.diginamic.jdbc.dao.Requetes;
 import fr.diginamic.jdbc.entites.Fournisseur;
+import fr.diginamic.jdbc.util.NamedParameterStatement;
 
 public class FournisseurDaoImpl implements FournisseurDao {
 	
 	private Connection con;
+	private NamedParameterStatement ns;
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
@@ -68,7 +70,7 @@ public class FournisseurDaoImpl implements FournisseurDao {
 	}
 
 	/**
-	 * méthode qui permet de créer un fournisseur en BdD
+	 * Méthode qui permet de créer un fournisseur en BdD
 	 */
 	@Override
 	public void creer(Fournisseur fournisseur) throws SQLException {
@@ -97,7 +99,7 @@ public class FournisseurDaoImpl implements FournisseurDao {
 			this.ps.setString(1, nouveauNom);
 			this.ps.setString(2, ancienNom);
 			int nb = this.ps.executeUpdate();
-			//System.out.println(nb + "ligne(s) update. Ancien nom : " + ancienNom + ", Nouveau nom: " + nouveauNom);
+			
 			return nb;
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
@@ -113,10 +115,27 @@ public class FournisseurDaoImpl implements FournisseurDao {
 	 * @return boolean 
 	 */
 	@Override
-	public boolean delete(String nomFournisseur) throws SQLException {
+	public boolean delete(Fournisseur fournisseur) throws SQLException {
 		try {
+			//SUPPRESSION DE L'ARTICLE LIE AU FOURNISSEUR		
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_ARTICLE_LIE_AU_FOURNISSEUR);
+			this.ps.setInt(1, fournisseur.getId());
+			this.ps.executeUpdate();
+			
+			//SUPPRESSION DU BON LIE AU FOURNISSEUR	
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_BON_LIE_AU_FOURNISSEUR);
+			this.ps.setInt(1, fournisseur.getId());
+			this.ps.executeUpdate();
+			
+			//SUPPRESSION DE LA COMPO LIEE AU FOURNISSEUR	
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_COMPO_LIE_AU_FOURNISSEUR);
+			this.ps.setInt(1, fournisseur.getId());
+			this.ps.setInt(2, fournisseur.getId());
+			this.ps.executeUpdate();
+			
+			//SUPPRESSION DU FOURNISSEUR
 			this.ps = this.con.prepareStatement(Requetes.SUPPR_FOURNISSEUR);
-			this.ps.setString(1, nomFournisseur);
+			this.ps.setInt(1, fournisseur.getId());
 			int nb = this.ps.executeUpdate();
 			return nb > 0 ? true : false;
 
@@ -133,7 +152,7 @@ public class FournisseurDaoImpl implements FournisseurDao {
 	 * @param nomFournisseur as String
 	 * @return fournisseur as Fournisseur
 	 */
-	
+	/*
 	@Override
 	public Fournisseur findOne(String nomFournisseur) throws SQLException {
 		
@@ -149,6 +168,32 @@ public class FournisseurDaoImpl implements FournisseurDao {
 		} finally {
 			if(this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
+			}
+		}
+		return null;
+	}
+	*/
+	/**
+	 * Méthode qui renvoie les informations d'un article
+	 * @param nomFournisseur as String
+	 * @return fournisseur as Fournisseur
+	 */
+	
+	@Override
+	public Fournisseur findOne(String nomFournisseur) throws SQLException {
+		this.ns = null;
+		try {
+			this.ns = new NamedParameterStatement(con, Requetes.FIND_ONE_FOURNISSEUR);
+			this.ns.setString("nom", nomFournisseur);
+			this.rs = this.ns.executeQuery();
+			while(this.rs.next()) {
+				Fournisseur elementTrouve = new Fournisseur(rs.getInt("id"), rs.getString("nom"));
+				return elementTrouve;
+			}
+			
+		} finally {
+			if(this.ns != null) {
+				this.ns.close();
 			}
 		}
 		return null;

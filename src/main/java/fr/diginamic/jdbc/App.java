@@ -49,7 +49,7 @@ public class App {
 
 
 	public static void main(String[] args) {
-		// mettre tout ce bloc dans un try and catch
+		
 		try {
 			Scanner scanner = new Scanner(System.in);
 

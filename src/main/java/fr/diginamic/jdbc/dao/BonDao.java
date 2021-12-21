@@ -9,6 +9,6 @@ public interface BonDao {
 	List<Bon> extraire() throws SQLException;
 	void creer(Bon bon) throws SQLException;
 	int update(Bon bon) throws SQLException;
-	boolean delete(int numeroBon) throws SQLException;
+	boolean delete(Bon bon) throws SQLException;
 	Bon findOne(int numeroBon) throws SQLException;
 }

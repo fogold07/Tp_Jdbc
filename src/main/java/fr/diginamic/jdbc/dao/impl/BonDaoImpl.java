@@ -123,11 +123,18 @@ public class BonDaoImpl implements BonDao {
 	 * @return boolean 
 	 */
 	@Override
-	public boolean delete(int numeroBon) throws SQLException {
+	public boolean delete(Bon bon) throws SQLException {
 		try {
+			//SUPPRESSION DE LA COMPO LIEE AU BON
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_COMPO_LIEE_BON);
+			this.ps.setInt(1, bon.getId());
+			this.ps.executeUpdate();
+			
+			//SUPPRESSION DU BON
 			this.ps = this.con.prepareStatement(Requetes.SUPPR_BON);
-			this.ps.setInt(1, numeroBon);
+			this.ps.setInt(1, bon.getId());
 			int nb = this.ps.executeUpdate();
+			
 			return nb > 0 ? true : false;
 
 		} finally {

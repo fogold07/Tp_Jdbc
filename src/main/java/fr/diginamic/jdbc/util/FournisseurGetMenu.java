@@ -2,6 +2,9 @@ package fr.diginamic.jdbc.util;
 
 import java.util.Scanner;
 
+import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
+import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
+import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
 /** Classe qui exécute les actions sur la table Fournisseur en fonction de la saisie de l'utilisateur en console.
@@ -9,7 +12,7 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
  *
  */
 public class FournisseurGetMenu {
-	private static FournisseurServiceImpl fournisseurSelection = new FournisseurServiceImpl();
+	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
 	
 
 	public static void traiterFournisseur(int sousMenu) {
@@ -31,7 +34,11 @@ public class FournisseurGetMenu {
 			paramStr1 = scanner.nextLine();
 			System.out.println("Saisir nouveau nom");
 			paramStr2 = scanner.nextLine();
-			fournisseurSelection.updateFournisseur(paramStr1, paramStr2);
+			try {
+				fournisseurSelection.updateFournisseur(paramStr1, paramStr2);
+			} catch (FournisseurUpdateException fue) {
+				fue.printStackTrace();
+			}
 			break;
 
 		// Suppression
@@ -39,7 +46,13 @@ public class FournisseurGetMenu {
 			fournisseurSelection.recupererFournisseurs();
 			System.out.println("Saisir à partir de la liste ci-dessus, le nom du fournisseur à supprimer");
 			paramStr1 = scanner.nextLine();
-			fournisseurSelection.supprimerFournisseur(paramStr1);
+			
+			try {
+				fournisseurSelection.supprimerFournisseur(paramStr1);
+			} catch (FournisseurNotFoundException fne) {
+				fne.printStackTrace();
+			}
+
 			break;
 
 		// Liste complète
@@ -51,7 +64,11 @@ public class FournisseurGetMenu {
 		case 5:
 			System.out.println("Nom du fournisseur que vous souhaitez visualiser: ");
 			paramStr1 = scanner.nextLine();
-			fournisseurSelection.visualiser(paramStr1);
+			try {
+				fournisseurSelection.visualiser(paramStr1);
+			} catch (FournisseurNotFoundException fne) {
+				fne.printStackTrace();
+			}
 			break;
 		default:
 			System.out.println("Erreur de saisie !");

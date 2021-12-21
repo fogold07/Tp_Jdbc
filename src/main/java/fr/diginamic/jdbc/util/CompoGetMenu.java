@@ -2,6 +2,9 @@ package fr.diginamic.jdbc.util;
 
 import java.util.Scanner;
 
+import fr.diginamic.jdbc.service.ArticleService;
+import fr.diginamic.jdbc.service.BonService;
+import fr.diginamic.jdbc.service.CompoService;
 import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.CompoServiceImpl;
@@ -12,9 +15,9 @@ import fr.diginamic.jdbc.service.impl.CompoServiceImpl;
  */
 
 public class CompoGetMenu {
-	private static ArticleServiceImpl articleSelection = new ArticleServiceImpl();
-	private static BonServiceImpl bonSelection = new BonServiceImpl();
-	private static CompoServiceImpl compoSelection = new CompoServiceImpl();
+	private static ArticleService articleSelection = new ArticleServiceImpl();
+	private static BonService bonSelection = new BonServiceImpl();
+	private static CompoService compoSelection = new CompoServiceImpl();
 	
 	public static void traiterCompo(int sousMenu) {
 		String paramStr1;

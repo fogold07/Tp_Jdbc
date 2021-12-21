@@ -2,6 +2,8 @@ package fr.diginamic.jdbc.util;
 
 import java.util.Scanner;
 
+import fr.diginamic.jdbc.service.ArticleService;
+import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
@@ -11,8 +13,8 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
  */
 public class ArticleGetMenu {
 
-	private static FournisseurServiceImpl fournisseurSelection = new FournisseurServiceImpl();
-	private static ArticleServiceImpl articleSelection = new ArticleServiceImpl();
+	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
+	private static ArticleService articleSelection = new ArticleServiceImpl();
 	
 	public static void traiterArticle(int sousMenu) {
 		String paramStr1;

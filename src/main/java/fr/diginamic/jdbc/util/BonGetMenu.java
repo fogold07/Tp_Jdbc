@@ -3,6 +3,8 @@ package fr.diginamic.jdbc.util;
 import java.text.ParseException;
 import java.util.Scanner;
 
+import fr.diginamic.jdbc.service.BonService;
+import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
@@ -12,8 +14,8 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
  *
  */
 public class BonGetMenu {
-	private static FournisseurServiceImpl fournisseurSelection = new FournisseurServiceImpl();
-	private static BonServiceImpl bonSelection = new BonServiceImpl();
+	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
+	private static BonService bonSelection = new BonServiceImpl();
 
 	
 	public static void traiterBon(int sousMenu) {

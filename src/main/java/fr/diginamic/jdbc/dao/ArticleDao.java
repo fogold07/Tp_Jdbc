@@ -9,7 +9,7 @@ public interface ArticleDao {
 	List<Article> extraire() throws SQLException;
 	void creer(Article article) throws SQLException;
 	int update(Article article) throws SQLException;
-	boolean delete(String ref) throws SQLException;
+	boolean delete(Article article) throws SQLException;
 	Article findOne(String ref) throws SQLException;
 	
 }

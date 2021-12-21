@@ -1,1 +1,7 @@
 fr.diginamic.jdbc
+fr.diginamic.jdbc.connection
+fr.diginamic.jdbc.dao
+fr.diginamic.jdbc.dao.impl
+fr.diginamic.jdbc.entites
+fr.diginamic.jdbc.service.impl
+fr.diginamic.jdbc.util

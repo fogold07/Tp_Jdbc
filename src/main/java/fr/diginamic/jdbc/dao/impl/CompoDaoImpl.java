@@ -83,9 +83,8 @@ public class CompoDaoImpl implements CompoDao {
 			this.ps.setInt(1, compo.getId_art());
 			this.ps.setInt(2, compo.getId_bon());
 			this.ps.setInt(3, compo.getQte());
-			int nb = this.ps.executeUpdate();
-			System.out.println(nb + " ligne ajoutée dans la table compo");
-
+			this.ps.executeUpdate();
+		
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();

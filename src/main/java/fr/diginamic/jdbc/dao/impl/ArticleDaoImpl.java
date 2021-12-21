@@ -127,11 +127,19 @@ public class ArticleDaoImpl implements ArticleDao {
 	 * @return boolean
 	 */
 	@Override
-	public boolean delete(String ref) throws SQLException {
+	public boolean delete(Article article) throws SQLException {
 		try {
+			
+			//SUPPRESSION DE LA COMPO LIEE A L'ARTICLE
+			this.ps = this.con.prepareStatement(Requetes.SUPPR_COMPO_LIEE_ARTICLE);
+			this.ps.setInt(1, article.getId());
+			this.ps.executeUpdate();
+			
+			//SUPPRESSION DE L'ARTICLE
 			this.ps = this.con.prepareStatement(Requetes.SUPPR_ARTICLE);
-			this.ps.setString(1, ref);
+			this.ps.setInt(1, article.getId());
 			int nb = this.ps.executeUpdate();
+			
 			return nb > 0 ? true : false;
 
 		} finally {

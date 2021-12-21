@@ -9,8 +9,9 @@ import java.util.List;
 import fr.diginamic.jdbc.dao.BonDao;
 import fr.diginamic.jdbc.dao.impl.BonDaoImpl;
 import fr.diginamic.jdbc.entites.Bon;
+import fr.diginamic.jdbc.service.BonService;
 
-public class BonServiceImpl {
+public class BonServiceImpl implements BonService {
 	private BonDao bdi = new BonDaoImpl();
 
 	/**
@@ -19,6 +20,7 @@ public class BonServiceImpl {
 	 * @param nomFournisseur
 	 * @throws ParseException
 	 */
+	@Override
 	public void creerBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
 
 		// conversion du String en sql.date
@@ -45,6 +47,7 @@ public class BonServiceImpl {
 	 * @param id_fou
 	 * @throws ParseException
 	 */
+	@Override
 	public void updateBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
 		// conversion du String en sql.date
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
@@ -67,6 +70,7 @@ public class BonServiceImpl {
 	 * 
 	 * @param paramSousMenu as int (choix du sous menu)
 	 */
+	@Override
 	public void recupererBons(int paramSousMenu) {
 		List<Bon> bons = new ArrayList<>();
 		try {
@@ -97,20 +101,17 @@ public class BonServiceImpl {
 	}
 
 	/**
-	 * Méthode qui supprime le bon du numéro saisie par l'User
+	 * Méthode qui supprime le bon du numéro saisie par l'User.
+	 * Elle supprime également toutes les compos liées au bon le cas échéant.
 	 * 
 	 * @param numéro du bon
 	 */
+	@Override
 	public void supprimerBon(int numeroBon) {
 		try {
-
-			boolean isDelete = bdi.delete(numeroBon);
-			if (isDelete) {
-				System.out.println("Bon # " + numeroBon + " supprimé de la table");
-			} else {
-				System.out.println("DELETE FAILED !");
-			}
-
+			Bon b = bdi.findOne(numeroBon);
+			String str = bdi.delete(b) ? "Bon # " + numeroBon + " supprimé." : "DELETE FAILED !";
+			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,6 +123,7 @@ public class BonServiceImpl {
 	 * 
 	 * @param numeroBon as int
 	 */
+	@Override
 	public void visualiser(int numeroBon) {
 		try {
 			if (bdi.findOne(numeroBon) == null) {
