@@ -5,6 +5,12 @@ import java.util.List;
 
 import fr.diginamic.jdbc.entites.Compo;
 
+/**
+ * Interface qui définit les méthodes obligatoires du CRUD pour le table Compo
+ * 
+ * @author Christian Ingold
+ *
+ */
 public interface CompoDao {
 
 	List<Compo> extraire() throws SQLException;

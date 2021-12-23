@@ -14,11 +14,15 @@ public class FournisseurDaoTest {
 
 	private FournisseurDao fdao = new FournisseurDaoImpl();
 	
+	/**
+	 * Test unitaire qui vérifie la mise à jour d'un fournisseur.
+	 * @throws SQLException
+	 */
 	@Test
 	public void test_fournisseur_update() throws SQLException {
-		Fournisseur f1 = new Fournisseur("Mes fournisseurs");
+		Fournisseur f = new Fournisseur("toto");
 
-		int nb = fdao.update(f1.getNom(), "toto");
+		int nb = fdao.update(f.getNom(), "Mes fournisseurs");
 		
 		assertThat(nb, is(1));
 	}
@@ -34,6 +38,20 @@ public class FournisseurDaoTest {
 		assertNotNull(f);
 		assertThat(f.getNom(), is(equalTo("FDM SA")));
 		//assertNull(f);
+		
+	}
+	
+	@Test
+	public void test_fournisseur_delete() throws SQLException {
+		Fournisseur f = fdao.findOne("TESTUNIT");
+		
+		Boolean result = fdao.delete(f);
+		
+		assertThat(result, is(true));
+	}
+	
+	@Test 
+	public void test_fournisseur_creer() {
 		
 	}
 }

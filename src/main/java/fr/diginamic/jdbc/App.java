@@ -2,10 +2,8 @@ package fr.diginamic.jdbc;
 
 import java.util.Scanner;
 
-import fr.diginamic.jdbc.util.ArticleGetMenu;
-import fr.diginamic.jdbc.util.BonGetMenu;
-import fr.diginamic.jdbc.util.CompoGetMenu;
-import fr.diginamic.jdbc.util.FournisseurGetMenu;
+import fr.diginamic.jdbc.service.RunService;
+import fr.diginamic.jdbc.service.impl.RunServiceImpl;
 
 /**
  * @author christophe Germain
@@ -49,81 +47,19 @@ public class App {
 
 
 	public static void main(String[] args) {
-		
+		RunService rsi = new RunServiceImpl();
 		try {
 			Scanner scanner = new Scanner(System.in);
-
-			int sousMenu = 0;
-
 			boolean runAgain = true;
-			String resp;
-
+			
 			while (runAgain) {
-
-				System.out.println(
-						"Choisir la table que vous voulez gérer: 1 = Fournisseur, 2 = Article, 3 = Bon, 4 = Compo.");
-				int menu = Integer.parseInt(scanner.nextLine());
-
-				// Enregistrement des informations saisies par l'User
-
-				switch (menu) {
-
-				// Fournisseur
-				case 1:
-					System.out.println(
-							"Choisir l'action à effectuer sur la table Fournisseur : 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complete, 5 = Visualisation d'un élément.");
-
-					sousMenu = Integer.parseInt(scanner.nextLine());
-
-					FournisseurGetMenu.traiterFournisseur(sousMenu);
-
-					break;
-
-				// Article
-				case 2:
-					System.out.println(
-							"Choisir l'action à effectuer sur la table Article : 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complete, 5 = Visualisation d'un élément.");
-
-					sousMenu = Integer.parseInt(scanner.nextLine());
-
-					ArticleGetMenu.traiterArticle(sousMenu);
-					break;
-
-				// Bon
-				case 3:
-					System.out.println(
-							"Choisir l'action à effectuer sur la table Bon : 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète, 5 = Visualisation d'un élément.");
-
-					sousMenu = Integer.parseInt(scanner.nextLine());
-
-					BonGetMenu.traiterBon(sousMenu);
-					break;
-
-				// Compo
-				case 4:
-					System.out.println("Choisir action sur la table Compo : 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète.");
-					sousMenu = Integer.parseInt(scanner.nextLine());
-					CompoGetMenu.traiterCompo(sousMenu);
-					break;
-				default:
-					System.out.println("Erreur de saisie !");
-					break;
-				}
-
-				System.out.println("Gérer d'autres tables ? O/N");
-				resp = (scanner.nextLine()).toUpperCase();
-				if (resp.equals("O")) {
-					runAgain = true;
-				} else {
-					runAgain = false;
-					System.out.println("Merci et à bientôt !");
-				}
+				rsi.lancerMenu();
+				runAgain = rsi.stopMenu();
 			}
-
 			scanner.close();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-}
+	}

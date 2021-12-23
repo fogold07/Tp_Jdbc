@@ -12,6 +12,12 @@ import fr.diginamic.jdbc.dao.ArticleDao;
 import fr.diginamic.jdbc.dao.Requetes;
 import fr.diginamic.jdbc.entites.Article;
 
+/**
+ * Classe qui implémente les opérations du CRUD en base de données de la table Article.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class ArticleDaoImpl implements ArticleDao {
 
 	private Connection con;
@@ -19,7 +25,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	private ResultSet rs;
 
 	/**
-	 * Etablissement de la connexion dans le constructeur
+	 * Etablissement de la connexion dans le constructeur.
 	 * 
 	 * @throws Exception
 	 */
@@ -34,7 +40,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * Destructeur et fermeture automatique de la connexion à la BDD
+	 * Destructeur et fermeture automatique de la connexion à la BDD.
 	 */
 	@Override
 	protected void finalize() throws Throwable {
@@ -43,7 +49,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * Méthode qui permet d'extraire toute le liste des articles
+	 * Méthode qui permet d'extraire toute la liste des articles.
 	 * 
 	 * @return articles ArrayList
 	 */
@@ -73,7 +79,8 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * méthode qui permet de créer un article en BdD
+	 * Méthode qui permet de créer un article en BdD.
+	 * 
 	 * @param article
 	 */
 	@Override
@@ -85,7 +92,7 @@ public class ArticleDaoImpl implements ArticleDao {
 			this.ps.setDouble(3, article.getPrix());
 			this.ps.setInt(4, article.getId_fou());
 			this.ps.executeUpdate();
-			
+
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
@@ -95,7 +102,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * Méthode qui met à jour un article
+	 * Méthode qui met à jour un article.
 	 * 
 	 * @param article à mettre à jour
 	 * @return nb ligne mise à jour as int
@@ -112,7 +119,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
 			int nb = this.ps.executeUpdate();
 			return nb;
-			
+
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
@@ -121,7 +128,8 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * Méthode qui supprime un article de la BdD
+	 * Méthode qui supprime un article de la BdD ainsi que tous les éléments de la table Compo
+	 * auxquels il est lié.
 	 * 
 	 * @param ref as String
 	 * @return boolean
@@ -129,17 +137,17 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public boolean delete(Article article) throws SQLException {
 		try {
-			
-			//SUPPRESSION DE LA COMPO LIEE A L'ARTICLE
+
+			// SUPPRESSION DE LA COMPO LIEE A L'ARTICLE
 			this.ps = this.con.prepareStatement(Requetes.SUPPR_COMPO_LIEE_ARTICLE);
 			this.ps.setInt(1, article.getId());
 			this.ps.executeUpdate();
-			
-			//SUPPRESSION DE L'ARTICLE
+
+			// SUPPRESSION DE L'ARTICLE
 			this.ps = this.con.prepareStatement(Requetes.SUPPR_ARTICLE);
 			this.ps.setInt(1, article.getId());
 			int nb = this.ps.executeUpdate();
-			
+
 			return nb > 0 ? true : false;
 
 		} finally {
@@ -150,7 +158,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	/**
-	 * Méthode qui renvoie les informations d'un article
+	 * Méthode qui renvoie les informations d'un article.
 	 * 
 	 * @param ref as String
 	 * @return elementTrouve as Article

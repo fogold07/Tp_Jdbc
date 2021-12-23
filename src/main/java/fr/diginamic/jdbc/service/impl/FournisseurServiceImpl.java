@@ -11,10 +11,19 @@ import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
 import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
 import fr.diginamic.jdbc.service.FournisseurService;
 
+/**
+ * Classe implémente les méthodes CRUD avec en paramètres les informations
+ * saisies en console sur l'entité Fournisseur.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class FournisseurServiceImpl implements FournisseurService {
 	private FournisseurDao fdi = new FournisseurDaoImpl();
-	
-	/** Méthode qui récupère la saisie l'User et crée le fournisseur
+
+	/**
+	 * Méthode qui récupère la saisie l'User et crée le fournisseur.
+	 * 
 	 * @param nomFournisseur
 	 */
 	@Override
@@ -22,19 +31,20 @@ public class FournisseurServiceImpl implements FournisseurService {
 		Fournisseur fournisseur = new Fournisseur(nomFournisseur);
 		try {
 			fdi.creer(fournisseur);
-			System.out.println( "Fournisseur " + fournisseur.getNom() + " ajouté la table.");
-			
+			System.out.println("Fournisseur " + fournisseur.getNom() + " ajouté la table.");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	/** 
+
+	/**
 	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un fournisseur
-	 * @param ancienNom as String
+	 * 
+	 * @param ancienNom  as String
 	 * @param nouveauNom as String
-	 * @throws FournisseurUpdateException 
+	 * @throws FournisseurUpdateException : update failed
 	 */
 	@Override
 	public void updateFournisseur(String ancienNom, String nouveauNom) throws FournisseurUpdateException {
@@ -42,18 +52,19 @@ public class FournisseurServiceImpl implements FournisseurService {
 		try {
 			nb = fdi.update(ancienNom, nouveauNom);
 			if (nb <= 0) {
-				throw new FournisseurUpdateException();
+				throw new FournisseurUpdateException("UPDATE FAILED !\n");
 			}
 
 			System.out.println(nb + " ligne update");
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	/** Méthode qui renvoie la liste des fournisseurs.
+
+	/**
+	 * Méthode qui affiche la liste des fournisseurs.
 	 */
 	@Override
 	public void recupererFournisseurs() {
@@ -67,44 +78,47 @@ public class FournisseurServiceImpl implements FournisseurService {
 			e.printStackTrace();
 		}
 	}
-	
-	/** 
-	 * Méthode qui supprime le fournisseur saisi par l'User.
-	 * Elle supprime également tous les articles, les bons et les compos liés au fournisseur le cas échéant.
+
+	/**
+	 * Méthode qui supprime le fournisseur saisi par l'User. Elle supprime également
+	 * tous les articles, les bons et les compos liés au fournisseur le cas échéant.
+	 * 
 	 * @param nomFournisseur
-	 * @throws FournisseurNotFoundException 
+	 * @throws FournisseurNotFoundException : fournisseur non trouvé
 	 */
 	@Override
 	public void supprimerFournisseur(String nomFournisseur) throws FournisseurNotFoundException {
 		try {
-			if(fdi.findOne(nomFournisseur)==null) {
-				throw new FournisseurNotFoundException();
+			if (fdi.findOne(nomFournisseur) == null) {
+				throw new FournisseurNotFoundException("FOURNISSEUR NOT FOUND !\n");
 			}
 			Fournisseur f = fdi.findOne(nomFournisseur);
-
+			
 			String str = fdi.delete(f) ? nomFournisseur + " supprimé." : "DELETE FAILED !";
 			System.out.println(str);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
-	/** Méthode qui affiche le fournisseur dont l'User veut le détail
+
+	/**
+	 * Méthode qui affiche le fournisseur dont l'User veut le détail.
+	 * 
 	 * @param nomFournisseur
-	 * @throws FournisseurNotFoundException 
+	 * @throws FournisseurNotFoundException : fournisseur non trouvé
 	 */
 	@Override
 	public void visualiser(String nomFournisseur) throws FournisseurNotFoundException {
 		try {
-			if(fdi.findOne(nomFournisseur)==null) {
-				throw new FournisseurNotFoundException();
+			if (fdi.findOne(nomFournisseur) == null) {
+				throw new FournisseurNotFoundException("FOURNISSEUR NOT FOUND !\n");
 			}
 			String str = fdi.findOne(nomFournisseur).toString();
 			System.out.println(str);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 }

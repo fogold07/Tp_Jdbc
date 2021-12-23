@@ -9,8 +9,11 @@ import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.CompoServiceImpl;
 
-/** Classe qui exécute les actions sur la table Compo en fonction de la saisie de l'utilisateur en console.
- * @author Christian I
+/**
+ * Classe qui exécute les actions sur la table Compo en fonction de la saisie de
+ * l'utilisateur en console.
+ * 
+ * @author Christian Ingold
  *
  */
 
@@ -18,17 +21,20 @@ public class CompoGetMenu {
 	private static ArticleService articleSelection = new ArticleServiceImpl();
 	private static BonService bonSelection = new BonServiceImpl();
 	private static CompoService compoSelection = new CompoServiceImpl();
-	
+
+	/**
+	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
+	 * @param sousMenu
+	 */
 	public static void traiterCompo(int sousMenu) {
 		String paramStr1;
 		int paramInt1;
 		int paramInt2;
 		int paramInt3;
 		int paramInt4;
-		
-		
+
 		Scanner scanner = new Scanner(System.in);
-		//1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète
+		// 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète
 		switch (sousMenu) {
 		// création
 		case 1:
@@ -41,8 +47,9 @@ public class CompoGetMenu {
 			System.out.println("Saisir la qté: ");
 			paramInt2 = Integer.parseInt(scanner.nextLine());
 			compoSelection.creerCompo(paramStr1, paramInt1, paramInt2);
+			// A remplacer par creerCompo(new Compo(p1,p2,p3)
 			break;
-		
+
 		case 2:
 			compoSelection.recupererCompos();
 			System.out.println("Saisir l'id_compo à modifier : ");
@@ -55,7 +62,7 @@ public class CompoGetMenu {
 			paramInt4 = Integer.parseInt(scanner.nextLine());
 			compoSelection.updateCompo(paramInt1, paramInt2, paramInt3, paramInt4);
 			break;
-			
+
 		// suppression
 		case 3:
 			compoSelection.recupererCompos();
@@ -63,16 +70,15 @@ public class CompoGetMenu {
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 			compoSelection.supprimerCompo(paramInt1);
 			break;
-			
-		// visualisation
+
+		// liste complete
 		case 4:
 			compoSelection.recupererCompos();
 			break;
 		default:
-			System.out.println("Erreur de saisie !");
+			System.err.println("Erreur de saisie !");
 			break;
 		}
-		
 
 	}
 

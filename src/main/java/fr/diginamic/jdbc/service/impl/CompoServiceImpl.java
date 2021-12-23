@@ -15,10 +15,17 @@ import fr.diginamic.jdbc.entites.Bon;
 import fr.diginamic.jdbc.entites.Compo;
 import fr.diginamic.jdbc.service.CompoService;
 
+/**
+ * Classe implémente les méthodes CRUD avec en paramètres les informations
+ * saisies en console sur l'entité Compo.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class CompoServiceImpl implements CompoService {
 	private CompoDao cdi = new CompoDaoImpl();
 	
-	/** Méthode qui crée une compo à partir des éléments saisis en console
+	/** Méthode qui crée une compo à partir des éléments saisis en console.
 	 * @param ref
 	 * @param numeroBon
 	 * @param qte
@@ -44,7 +51,7 @@ public class CompoServiceImpl implements CompoService {
 	}
 	
 	
-	/** Méthode qui affiche la liste de toutes les compos
+	/** Méthode qui affiche la liste de toutes les compos.
 	 * 
 	 */
 	@Override
@@ -60,7 +67,7 @@ public class CompoServiceImpl implements CompoService {
 		}
 	}
 	
-	/** Méthode qui met à jour la compo avec les informations saisies en console
+	/** Méthode qui met à jour la compo avec les informations saisies en console.
 	 * @param idCompo
 	 * @param id_art
 	 * @param id_bon
@@ -72,8 +79,12 @@ public class CompoServiceImpl implements CompoService {
 		int nb; 
 		try {
 			nb = cdi.update(c);
-			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
-			System.out.println(str);
+			
+			if (nb>0) System.out.println(nb + " ligne update");
+			else System.err.println("UPDATE FAILED ON COMPO !");
+			
+//			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
+//			System.out.println(str);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,9 +101,9 @@ public class CompoServiceImpl implements CompoService {
 			
 			boolean isDelete = cdi.delete(idCompo);
 			if (isDelete) {
-				System.out.println("Compo # " + idCompo + " supprimée de la table");
+				System.out.println("Compo n° " + idCompo + " supprimée de la table");
 			} else {
-				System.out.println("DELETE FAILED !");
+				System.err.println("DELETE FAILED ON COMPO !");
 			}
 			
 		} catch (SQLException e) {

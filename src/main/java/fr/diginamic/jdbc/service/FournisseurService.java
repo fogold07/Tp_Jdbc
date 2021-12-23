@@ -1,8 +1,15 @@
 package fr.diginamic.jdbc.service;
 
+
 import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
 import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
 
+/**
+ * Interface qui définit les méthodes services sur les fournisseurs.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public interface FournisseurService {
 	void creerFournisseur(String nomFournisseur);
 

@@ -4,6 +4,12 @@ import java.sql.Date;
 
 //import java.util.Date;
 
+/**
+ * Classe qui définit les attributs de l'élément Bon.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class Bon {
 	private int id; 
 	private int numero; 

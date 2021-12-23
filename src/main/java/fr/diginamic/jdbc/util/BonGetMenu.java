@@ -8,16 +8,22 @@ import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
-
-/** Classe qui exécute les actions sur la table Bon en fonction de la saisie de l'utilisateur en console.
- * @author Christian I
+/**
+ * Classe qui exécute les actions sur la table Bon en fonction de la saisie de
+ * l'utilisateur en console.
+ * 
+ * @author Christian Ingold
  *
  */
 public class BonGetMenu {
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
 	private static BonService bonSelection = new BonServiceImpl();
 
-	
+	/**
+	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
+	 * 
+	 * @param sousMenu
+	 */
 	public static void traiterBon(int sousMenu) {
 		String paramStr2;
 		int paramInt1;
@@ -100,10 +106,10 @@ public class BonGetMenu {
 			bonSelection.visualiser(paramInt2);
 			break;
 		default:
-			System.out.println("Erreur de saisie !");
+			System.err.println("Erreur de saisie !");
 			break;
 		}
 
 	}
-	
+
 }

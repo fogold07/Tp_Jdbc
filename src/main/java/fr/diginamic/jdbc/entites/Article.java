@@ -1,5 +1,11 @@
 package fr.diginamic.jdbc.entites;
 
+/**
+ * Classe qui définit les attributs de l'élément Article.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class Article {
 
 	private int id; 

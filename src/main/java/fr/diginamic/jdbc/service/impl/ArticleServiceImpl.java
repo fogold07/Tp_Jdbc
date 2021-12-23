@@ -9,16 +9,19 @@ import fr.diginamic.jdbc.dao.impl.ArticleDaoImpl;
 import fr.diginamic.jdbc.entites.Article;
 import fr.diginamic.jdbc.service.ArticleService;
 
-/** 
- * Classe implémente les services.
- * @author Christian I
+/**
+ * Classe implémente les méthodes CRUD avec en paramètres les informations
+ * saisies en console sur l'entité Article.
+ * 
+ * @author Christian Ingold
  *
  */
 public class ArticleServiceImpl implements ArticleService {
 	private ArticleDao adi = new ArticleDaoImpl();
-	
 
-	/** Méthode qui récupère la saisie l'User et crée l'article
+	/**
+	 * Méthode qui récupère la saisie l'User et crée l'article.
+	 * 
 	 * @param ref
 	 * @param designation
 	 * @param prix
@@ -35,10 +38,10 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 	}
-	
 
 	/**
-	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un article
+	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un article.
+	 * 
 	 * @param ref
 	 * @param designation
 	 * @param prix
@@ -50,15 +53,21 @@ public class ArticleServiceImpl implements ArticleService {
 		try {
 			article.setRef(ref);
 			int nb = adi.update(article);
-			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
-			System.out.println(str);
+			if (nb>0) System.out.println(nb + " ligne update");
+			else System.err.println("UPDATE FAILED ON ARTICLE !");
+			
+//			String str = nb > 0 ? nb + " ligne update" : "UPDATE FAILED !";
+//			System.out.println(str);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	/** Méthode qui renvoie la liste des articles
+
+	/**
+	 * Méthode qui renvoie la liste des articles.
+	 * 
 	 * @param paramSousMenu as int (choix du sous menu)
 	 */
 	@Override
@@ -80,45 +89,55 @@ public class ArticleServiceImpl implements ArticleService {
 				}
 				break;
 			default:
+				System.err.println("WRONG VALUE !");
 				break;
-			}			
-			
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
-	/** 
-	 * Méthode qui supprime l'article de la ref saisie par l'User
-	 * Elle supprime également toutes les compos liées à l'article le cas échéant.
+	/**
+	 * Méthode qui supprime l'article de la ref saisie par l'User. Elle supprime
+	 * également toutes les compos liées à l'article le cas échéant.
+	 * 
 	 * @param ref article
 	 */
 	@Override
 	public void supprimerArticle(String ref) {
 		try {
 			Article a = adi.findOne(ref);
-			String str = adi.delete(a)? ref+" supprimé." : "DELETE FAILED !" ;
-			System.out.println(str);
+			
+			if(a == null || !adi.delete(a)) {
+				System.err.println("DELETE FAILED ON ARTICLE !");
+			}
+			else System.out.println("Article REF: "+ ref + " supprimé.");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	/** Méthode qui affiche le fournisseur dont l'User veut le détail
+
+	/**
+	 * Méthode qui affiche l'article dont l'User veut le détail.
+	 * 
 	 * @param ref article
 	 */
 	@Override
 	public void visualiser(String ref) {
 		try {
-			String str = adi.findOne(ref)!=null?adi.findOne(ref).toString():"NOT FOUND !";
-			System.out.println(str);
+			if (adi.findOne(ref) != null) System.out.println(adi.findOne(ref).toString());
+			else System.err.println("ARTICLE NOT FOUND !");
 			
+//			String str = adi.findOne(ref) != null ? adi.findOne(ref).toString() : "NOT FOUND !";
+//			System.out.println(str);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

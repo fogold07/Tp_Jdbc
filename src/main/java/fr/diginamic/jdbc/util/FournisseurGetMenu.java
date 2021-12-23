@@ -7,14 +7,21 @@ import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
 import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
-/** Classe qui exécute les actions sur la table Fournisseur en fonction de la saisie de l'utilisateur en console.
- * @author Christian I
+/**
+ * Classe qui exécute les actions sur la table Fournisseur en fonction de la
+ * saisie de l'utilisateur en console.
+ * 
+ * @author Christian Ingold
  *
  */
 public class FournisseurGetMenu {
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
-	
 
+	/**
+	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
+	 * 
+	 * @param sousMenu
+	 */
 	public static void traiterFournisseur(int sousMenu) {
 		String paramStr1;
 		String paramStr2;
@@ -37,7 +44,7 @@ public class FournisseurGetMenu {
 			try {
 				fournisseurSelection.updateFournisseur(paramStr1, paramStr2);
 			} catch (FournisseurUpdateException fue) {
-				fue.printStackTrace();
+				System.err.println(fue.getMessage());
 			}
 			break;
 
@@ -46,11 +53,11 @@ public class FournisseurGetMenu {
 			fournisseurSelection.recupererFournisseurs();
 			System.out.println("Saisir à partir de la liste ci-dessus, le nom du fournisseur à supprimer");
 			paramStr1 = scanner.nextLine();
-			
+
 			try {
 				fournisseurSelection.supprimerFournisseur(paramStr1);
 			} catch (FournisseurNotFoundException fne) {
-				fne.printStackTrace();
+				System.err.println(fne.getMessage());
 			}
 
 			break;
@@ -67,11 +74,11 @@ public class FournisseurGetMenu {
 			try {
 				fournisseurSelection.visualiser(paramStr1);
 			} catch (FournisseurNotFoundException fne) {
-				fne.printStackTrace();
+				System.err.println(fne.getMessage());
 			}
 			break;
 		default:
-			System.out.println("Erreur de saisie !");
+			System.err.println("Erreur de saisie !");
 			break;
 		}
 

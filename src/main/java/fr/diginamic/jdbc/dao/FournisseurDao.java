@@ -5,6 +5,12 @@ import java.util.List;
 
 import fr.diginamic.jdbc.entites.Fournisseur;
 
+/**
+ * Interface qui définit les méthodes obligatoires du CRUD pour le table Fournisseur.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public interface FournisseurDao {
 	List<Fournisseur> extraire() throws SQLException;
 	void creer(Fournisseur fournisseur) throws SQLException;

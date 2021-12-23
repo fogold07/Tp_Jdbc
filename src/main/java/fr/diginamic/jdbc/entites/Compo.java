@@ -1,13 +1,18 @@
 package fr.diginamic.jdbc.entites;
 
+/**
+ * Classe qui définit les attributs de l'élément Compo.
+ * 
+ * @author Christian Ingold
+ *
+ */
+
 public class Compo {
 	private int id;
 	private int id_art;
 	private int id_bon;
 	private int qte;
-	
-	
-	
+
 	public Compo() {
 		super();
 	}
@@ -63,7 +68,5 @@ public class Compo {
 	public String toString() {
 		return "Compo [id=" + id + ", id_art=" + id_art + ", id_bon=" + id_bon + ", qte=" + qte + "]";
 	}
-	
-	
-	
+
 }

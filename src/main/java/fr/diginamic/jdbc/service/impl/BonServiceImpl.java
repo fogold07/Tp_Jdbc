@@ -11,14 +11,24 @@ import fr.diginamic.jdbc.dao.impl.BonDaoImpl;
 import fr.diginamic.jdbc.entites.Bon;
 import fr.diginamic.jdbc.service.BonService;
 
+/**
+ * Classe implémente les méthodes CRUD avec en paramètres les informations
+ * saisies en console sur l'entité Bon.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class BonServiceImpl implements BonService {
 	private BonDao bdi = new BonDaoImpl();
 
+
 	/**
-	 * Méthode qui récupère la saisie l'User et crée le fournisseur
-	 * 
-	 * @param nomFournisseur
-	 * @throws ParseException
+	 *  Méthode qui récupère la saisie l'User et crée le bon.
+	 *  
+	 *  @param numero (n° du bon as int)
+	 *  @param dateStr (date as String)
+	 *  @param delai as int
+	 *  @param id_fou as int
 	 */
 	@Override
 	public void creerBon(int numero, String dateStr, int delai, int id_fou) throws ParseException {
@@ -39,7 +49,7 @@ public class BonServiceImpl implements BonService {
 	}
 
 	/**
-	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un bon
+	 * Méthode qui récupère la saisie de l'User pour la mise à jour d'un bon.
 	 * 
 	 * @param numero
 	 * @param dateStr
@@ -58,15 +68,18 @@ public class BonServiceImpl implements BonService {
 		try {
 			bon.setNumero(numero);
 			nb = bdi.update(bon);
-			String str = nb > 0 ? nb + " ligne update. Bon n°" + numero + " mis à jour." : "UPDATE FAILED !";
-			System.out.println(str);
+			if (nb>0) System.out.println(nb + " ligne update");
+			else System.err.println("UPDATE FAILED ON BON !");
+			
+//			String str = nb > 0 ? nb + " ligne update. Bon n°" + numero + " mis à jour." : "UPDATE FAILED !";
+//			System.out.println(str);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Méthode qui renvoie la liste de tous les bons
+	 * Méthode qui renvoie la liste de tous les bons.
 	 * 
 	 * @param paramSousMenu as int (choix du sous menu)
 	 */
@@ -90,7 +103,7 @@ public class BonServiceImpl implements BonService {
 				}
 				break;
 			default:
-				System.out.println("WRONG VALUE !");
+				System.err.println("WRONG VALUE !");
 				break;
 			}
 
@@ -110,8 +123,9 @@ public class BonServiceImpl implements BonService {
 	public void supprimerBon(int numeroBon) {
 		try {
 			Bon b = bdi.findOne(numeroBon);
-			String str = bdi.delete(b) ? "Bon # " + numeroBon + " supprimé." : "DELETE FAILED !";
-			System.out.println(str);
+			if(b == null || !bdi.delete(b)) System.err.println("DELETE FAILED ON BON !");
+			else System.out.println("Bon n° " + numeroBon + " supprimé.");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,18 +133,15 @@ public class BonServiceImpl implements BonService {
 	}
 
 	/**
-	 * Méthode qui affiche le bon dont l'User veut avoir le détail
+	 * Méthode qui affiche le bon dont l'User veut avoir le détail.
 	 * 
 	 * @param numeroBon as int
 	 */
 	@Override
 	public void visualiser(int numeroBon) {
 		try {
-			if (bdi.findOne(numeroBon) == null) {
-				System.out.println("NOT FOUND !");
-			} else {
-				System.out.println(bdi.findOne(numeroBon));
-			}
+			if (bdi.findOne(numeroBon) != null) System.out.println(bdi.findOne(numeroBon));
+			else System.err.println("BON NOT FOUND !");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

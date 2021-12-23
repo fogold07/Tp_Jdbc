@@ -1,7 +1,9 @@
 package fr.diginamic.jdbc.entites;
 
-/** Construit un fournisseur
- * @author christian I
+/**
+ * Classe qui définit les attributs de l'élément Fournisseur.
+ * 
+ * @author Christian Ingold
  *
  */
 public class Fournisseur {

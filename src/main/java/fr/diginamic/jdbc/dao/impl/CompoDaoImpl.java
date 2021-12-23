@@ -12,6 +12,12 @@ import fr.diginamic.jdbc.dao.CompoDao;
 import fr.diginamic.jdbc.dao.Requetes;
 import fr.diginamic.jdbc.entites.Compo;
 
+/**
+ * Classe qui implémente les opérations du CRUD en base de données
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class CompoDaoImpl implements CompoDao {
 
 	private Connection con;

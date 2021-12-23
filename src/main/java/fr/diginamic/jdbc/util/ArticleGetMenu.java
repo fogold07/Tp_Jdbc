@@ -7,20 +7,27 @@ import fr.diginamic.jdbc.service.FournisseurService;
 import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 
-/** Classe qui exécute les actions sur la table Article en fonction de la saisie de l'utilisateur en console.
- * @author Christian I
+/**
+ * Classe qui exécute les actions sur la table Article en fonction de la saisie
+ * de l'utilisateur en console.
+ * 
+ * @author Christian Ingold
  *
  */
 public class ArticleGetMenu {
 
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
 	private static ArticleService articleSelection = new ArticleServiceImpl();
-	
+
+	/**
+	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
+	 * @param sousMenu
+	 */
 	public static void traiterArticle(int sousMenu) {
 		String paramStr1;
 		String paramStr2;
 		int paramInt1;
-		
+
 		double paramDbl = 0.0d;
 
 		Scanner scanner = new Scanner(System.in);
@@ -38,6 +45,7 @@ public class ArticleGetMenu {
 
 			System.out.println("Saisir id_fournisseur parmis la liste:");
 			fournisseurSelection.recupererFournisseurs();
+			System.out.print("=> Votre choix : ");
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
 			articleSelection.creerArticle(paramStr1, paramStr2, paramDbl, paramInt1);
@@ -49,14 +57,15 @@ public class ArticleGetMenu {
 			System.out.println("Saisir REF de l'article à mettre à jour : ");
 			articleSelection.recupererArticles(sousMenu);
 			paramStr1 = scanner.nextLine();
-			System.out.println("Saisir nouvelle Désignation: ");
+			System.out.println("Saisir nouvelle Désignation : ");
 			paramStr2 = scanner.nextLine();
 
-			System.out.println("Saisir nouveau Prix ");
+			System.out.println("Saisir nouveau Prix : ");
 			paramDbl = Double.parseDouble(scanner.nextLine());
 
 			System.out.println("Saisir nouvel id_fournisseur parmis la liste:");
 			fournisseurSelection.recupererFournisseurs();
+			System.out.print("=> Votre choix : ");
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
 			articleSelection.updateArticle(paramStr1, paramStr2, paramDbl, paramInt1);
@@ -66,6 +75,7 @@ public class ArticleGetMenu {
 		case 3:
 			System.out.println("Saisir à partir de la liste ci-dessous, la ref de l'article à supprimer");
 			articleSelection.recupererArticles(sousMenu);
+			System.out.print("=> Votre choix : ");
 			paramStr1 = scanner.nextLine();
 			articleSelection.supprimerArticle(paramStr1);
 			break;
@@ -77,15 +87,15 @@ public class ArticleGetMenu {
 		case 5:
 			System.out.println("Saisir la ref à visualiser: ");
 			articleSelection.recupererArticles(sousMenu);
+			System.out.print("=> Votre choix : ");
 			paramStr1 = scanner.nextLine();
 			articleSelection.visualiser(paramStr1);
 			break;
 		default:
-			System.out.println("Erreur de saisie !");
+			System.err.println("Erreur de saisie !");
 			break;
 		}
 
-
 	}
-	
+
 }
