@@ -2,9 +2,9 @@ fr.diginamic.jdbc
 fr.diginamic.jdbc.connection
 fr.diginamic.jdbc.dao
 fr.diginamic.jdbc.dao.impl
-fr.diginamic.jdbc.doa.impl
 fr.diginamic.jdbc.entites
 fr.diginamic.jdbc.exceptions
 fr.diginamic.jdbc.service
 fr.diginamic.jdbc.service.impl
+fr.diginamic.jdbc.test.doa.impl
 fr.diginamic.jdbc.util
