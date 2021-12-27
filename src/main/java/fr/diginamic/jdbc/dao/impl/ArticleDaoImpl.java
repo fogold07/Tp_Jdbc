@@ -84,7 +84,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	 * @param article
 	 */
 	@Override
-	public void creer(Article article) throws SQLException {
+	public Article creer(Article article) throws SQLException {
 		try {
 			this.ps = this.con.prepareStatement(Requetes.AJOUT_ARTICLE);
 			this.ps.setString(1, article.getRef());
@@ -92,6 +92,16 @@ public class ArticleDaoImpl implements ArticleDao {
 			this.ps.setDouble(3, article.getPrix());
 			this.ps.setInt(4, article.getId_fou());
 			this.ps.executeUpdate();
+			
+			this.ps = this.con.prepareStatement(Requetes.FIND_ONE_ARTICLE);
+			this.ps.setString(1, article.getRef());
+			this.rs = this.ps.executeQuery();
+			if (this.rs.next()) {
+				Article elementTrouve = new Article(rs.getInt("id"), rs.getString("ref"), rs.getString("designation"),
+						rs.getDouble("prix"), rs.getInt("id_fou"));
+				return elementTrouve;
+			}
+			else return null;
 
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
@@ -169,18 +179,19 @@ public class ArticleDaoImpl implements ArticleDao {
 			this.ps = this.con.prepareStatement(Requetes.FIND_ONE_ARTICLE);
 			this.ps.setString(1, ref);
 			this.rs = this.ps.executeQuery();
-			while (this.rs.next()) {
+			if (this.rs.next()) {
 				Article elementTrouve = new Article(rs.getInt("id"), rs.getString("ref"), rs.getString("designation"),
 						rs.getDouble("prix"), rs.getInt("id_fou"));
 				return elementTrouve;
 			}
+			else return null;
 
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
 			}
 		}
-		return null;
+
 	}
 
 }

@@ -13,7 +13,7 @@ public class Requetes {
 	public static final String TOUS_LES_FOURNISSEURS = "SELECT * FROM fournisseur";
 
 	public static final String FIND_ONE_FOURNISSEUR = "SELECT * FROM fournisseur WHERE nom=:nom ";
-
+	
 	public static final String AJOUT_FOURNISSEUR = "INSERT INTO fournisseur(nom) VALUES (?)";
 
 	public static final String UPDATE_FOURNISSEUR = "UPDATE fournisseur SET nom =? WHERE nom =?";
@@ -61,4 +61,6 @@ public class Requetes {
 	public static final String SUPPR_COMPO_LIEE_ARTICLE = "DELETE FROM compo WHERE id_art =?";
 
 	public static final String SUPPR_COMPO_LIEE_BON = "DELETE FROM compo WHERE id_bon =?";
+
+	
 }

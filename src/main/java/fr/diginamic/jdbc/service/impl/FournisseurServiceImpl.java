@@ -28,9 +28,9 @@ public class FournisseurServiceImpl implements FournisseurService {
 	 */
 	@Override
 	public void creerFournisseur(String nomFournisseur) {
-		Fournisseur fournisseur = new Fournisseur(nomFournisseur);
+	
 		try {
-			fdi.creer(fournisseur);
+			Fournisseur fournisseur = fdi.creer(new Fournisseur(nomFournisseur));
 			System.out.println("Fournisseur " + fournisseur.getNom() + " ajouté la table.");
 
 		} catch (SQLException e) {

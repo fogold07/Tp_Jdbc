@@ -83,13 +83,14 @@ public class CompoDaoImpl implements CompoDao {
 	 * @param compo
 	 */
 	@Override
-	public void creer(Compo compo) throws SQLException {
+	public int creer(Compo compo) throws SQLException {
 		try {
 			this.ps = this.con.prepareStatement(Requetes.AJOUT_COMPO);
 			this.ps.setInt(1, compo.getId_art());
 			this.ps.setInt(2, compo.getId_bon());
 			this.ps.setInt(3, compo.getQte());
-			this.ps.executeUpdate();
+			int nb = this.ps.executeUpdate();
+			return nb;
 		
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {

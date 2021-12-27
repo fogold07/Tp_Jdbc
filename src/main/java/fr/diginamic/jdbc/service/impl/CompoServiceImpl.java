@@ -40,9 +40,8 @@ public class CompoServiceImpl implements CompoService {
 			Article art = adi.findOne(ref);
 			Bon bon = bdi.findOne(numeroBon);
 
-			Compo compo = new Compo(art.getId(), bon.getId(), qte);
-			cdi.creer(compo);
-			System.out.println("Compo ajoutée à la table !");
+			int nb = cdi.creer(new Compo(art.getId(), bon.getId(), qte));
+			System.out.println(nb + "compo ajoutée à la table !");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,10 +74,9 @@ public class CompoServiceImpl implements CompoService {
 	 */
 	@Override
 	public void updateCompo(int idCompo, int id_art, int id_bon, int qte) {
-		Compo c = new Compo(idCompo, id_art, id_bon, qte);
 		int nb; 
 		try {
-			nb = cdi.update(c);
+			nb = cdi.update(new Compo(idCompo, id_art, id_bon, qte));
 			
 			if (nb>0) System.out.println(nb + " ligne update");
 			else System.err.println("UPDATE FAILED ON COMPO !");

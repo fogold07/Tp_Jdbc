@@ -29,9 +29,8 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public void creerArticle(String ref, String designation, double prix, int id_fou) {
-		Article article = new Article(ref, designation, prix, id_fou);
 		try {
-			adi.creer(article);
+			Article article = adi.creer(new Article(ref, designation, prix, id_fou));
 			System.out.println("Article " + article.getRef() + " ajouté dans la table.");
 		} catch (SQLException e) {
 			e.printStackTrace();

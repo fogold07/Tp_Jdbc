@@ -38,9 +38,8 @@ public class BonServiceImpl implements BonService {
 		java.util.Date date = sdf.parse(dateStr);
 		java.sql.Date dateSql = new java.sql.Date(date.getTime());
 
-		Bon bon = new Bon(numero, dateSql, delai, id_fou);
 		try {
-			bdi.creer(bon);
+			Bon bon = bdi.creer(new Bon(numero, dateSql, delai, id_fou));
 			System.out.println("Bon n°" + bon.getNumero() + " ajouté à la table");
 		} catch (SQLException e) {
 			e.printStackTrace();

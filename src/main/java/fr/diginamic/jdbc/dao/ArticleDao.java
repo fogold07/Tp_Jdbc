@@ -14,7 +14,7 @@ import fr.diginamic.jdbc.entites.Article;
 public interface ArticleDao {
 	List<Article> extraire() throws SQLException;
 
-	void creer(Article article) throws SQLException;
+	Article creer(Article article) throws SQLException;
 
 	int update(Article article) throws SQLException;
 

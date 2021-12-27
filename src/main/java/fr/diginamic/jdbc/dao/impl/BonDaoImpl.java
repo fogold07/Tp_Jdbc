@@ -84,7 +84,7 @@ public class BonDaoImpl implements BonDao {
 	 * Méthode qui permet de créer un bon en BdD.
 	 */
 	@Override
-	public void creer(Bon bon) throws SQLException {
+	public Bon creer(Bon bon) throws SQLException {
 
 		try {
 			this.ps = this.con.prepareStatement(Requetes.AJOUT_BON);
@@ -94,6 +94,17 @@ public class BonDaoImpl implements BonDao {
 			this.ps.setInt(3, bon.getDelai());
 			this.ps.setInt(4, bon.getId_fou());
 			this.ps.executeUpdate();
+			
+			//Requete pour retourner le bon crée
+			this.ps = this.con.prepareStatement(Requetes.FIND_ONE_BON);
+			this.ps.setInt(1, bon.getNumero());
+			this.rs = this.ps.executeQuery();
+			if (this.rs.next()) {
+				Bon elementTrouve = new Bon(rs.getInt("id"), rs.getInt("numero"), rs.getDate("date_cmde"),
+						rs.getInt("delai"), rs.getInt("id_fou"));
+				return elementTrouve;
+			}
+			else return null;
 
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
@@ -170,18 +181,18 @@ public class BonDaoImpl implements BonDao {
 			this.ps = this.con.prepareStatement(Requetes.FIND_ONE_BON);
 			this.ps.setInt(1, numeroBon);
 			this.rs = this.ps.executeQuery();
-			while (this.rs.next()) {
+			if (this.rs.next()) {
 				Bon elementTrouve = new Bon(rs.getInt("id"), rs.getInt("numero"), rs.getDate("date_cmde"),
 						rs.getInt("delai"), rs.getInt("id_fou"));
 				return elementTrouve;
 			}
+			else return null;
 
 		} finally {
 			if (this.ps != null && !this.ps.isClosed()) {
 				this.ps.close();
 			}
 		}
-		return null;
 	}
 
 }
