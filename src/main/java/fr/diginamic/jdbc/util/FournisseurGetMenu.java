@@ -5,7 +5,11 @@ import java.util.Scanner;
 import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
 import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
 import fr.diginamic.jdbc.service.FournisseurService;
+import fr.diginamic.jdbc.service.MenuService;
+import fr.diginamic.jdbc.service.RunService;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
+import fr.diginamic.jdbc.service.impl.MenuServiceImpl;
+import fr.diginamic.jdbc.service.impl.RunServiceImpl;
 
 /**
  * Classe qui exécute les actions sur la table Fournisseur en fonction de la
@@ -16,6 +20,8 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
  */
 public class FournisseurGetMenu {
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
+
+	private static RunService rsi = new RunServiceImpl();
 
 	/**
 	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
@@ -28,6 +34,10 @@ public class FournisseurGetMenu {
 
 		Scanner scanner = new Scanner(System.in);
 		switch (sousMenu) {
+		case 0:
+			rsi.lancerMenu();
+			break;
+		
 		case 1:
 			System.out.println("Saisir nom du fournisseur");
 			paramStr1 = scanner.nextLine();
@@ -36,7 +46,7 @@ public class FournisseurGetMenu {
 
 		// modification
 		case 2:
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(sousMenu);
 			System.out.println("Saisir l'ancien nom parmi la liste");
 			paramStr1 = scanner.nextLine();
 			System.out.println("Saisir nouveau nom");
@@ -50,7 +60,7 @@ public class FournisseurGetMenu {
 
 		// Suppression
 		case 3:
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(sousMenu);
 			System.out.println("Saisir à partir de la liste ci-dessus, le nom du fournisseur à supprimer");
 			paramStr1 = scanner.nextLine();
 
@@ -64,12 +74,13 @@ public class FournisseurGetMenu {
 
 		// Liste complète
 		case 4:
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(sousMenu);
 			break;
 
 		// Visualisation élément
 		case 5:
-			System.out.println("Nom du fournisseur que vous souhaitez visualiser: ");
+			fournisseurSelection.recupererFournisseurs(sousMenu);
+			System.out.println("Nom du fournisseur dont vous souhaitez avoir le détail: ");
 			paramStr1 = scanner.nextLine();
 			try {
 				fournisseurSelection.visualiser(paramStr1);
@@ -77,6 +88,7 @@ public class FournisseurGetMenu {
 				System.err.println(fne.getMessage());
 			}
 			break;
+			
 		default:
 			System.err.println("Erreur de saisie !");
 			break;

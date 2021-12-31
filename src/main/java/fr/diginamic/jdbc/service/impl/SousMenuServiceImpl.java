@@ -23,6 +23,8 @@ public class SousMenuServiceImpl implements SousMenuService {
 			System.out.println("2 -> Modifier");
 			System.out.println("3 -> Supprimer");
 			System.out.println("4 -> Liste complète");
+			
+			System.out.println("(0 : Retour au Menu principal)");
 			System.out.print("Votre choix: ");
 		}
 		else {
@@ -33,6 +35,8 @@ public class SousMenuServiceImpl implements SousMenuService {
 			System.out.println("3 -> Supprimer");
 			System.out.println("4 -> Liste complète");
 			System.out.println("5 -> Visualiser un élément");
+			
+			System.out.println("(0 : Retour au Menu principal)");
 			System.out.print("Votre choix: ");
 		}
 		

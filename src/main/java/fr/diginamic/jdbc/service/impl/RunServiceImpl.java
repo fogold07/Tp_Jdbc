@@ -11,7 +11,7 @@ import fr.diginamic.jdbc.util.CompoGetMenu;
 import fr.diginamic.jdbc.util.FournisseurGetMenu;
 
 /**
- * Classe permet de lancer
+ * Classe permet de lancer les différents services.
  * 
  * @author Christian Ingold
  *
@@ -72,6 +72,8 @@ public class RunServiceImpl implements RunService {
 				sms.displayTitleActionSousMenu(sousMenu);
 				CompoGetMenu.traiterCompo(sousMenu);
 				break;
+				
+
 			default:
 				System.err.println("Erreur de saisie !");
 				break;

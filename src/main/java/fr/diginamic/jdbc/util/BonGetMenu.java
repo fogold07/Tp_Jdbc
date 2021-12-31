@@ -5,8 +5,10 @@ import java.util.Scanner;
 
 import fr.diginamic.jdbc.service.BonService;
 import fr.diginamic.jdbc.service.FournisseurService;
+import fr.diginamic.jdbc.service.RunService;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
+import fr.diginamic.jdbc.service.impl.RunServiceImpl;
 
 /**
  * Classe qui exécute les actions sur la table Bon en fonction de la saisie de
@@ -18,6 +20,7 @@ import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
 public class BonGetMenu {
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
 	private static BonService bonSelection = new BonServiceImpl();
+	private static RunService rsi = new RunServiceImpl();
 
 	/**
 	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
@@ -34,8 +37,11 @@ public class BonGetMenu {
 		Scanner scanner = new Scanner(System.in);
 
 		switch (sousMenu) {
+		case 0:
+			rsi.lancerMenu();
+			break;
+		
 		// création
-
 		case 1:
 			System.out.println("Saisir le numéro: ");
 			paramInt2 = Integer.parseInt(scanner.nextLine());
@@ -47,7 +53,7 @@ public class BonGetMenu {
 			paramInt3 = Integer.parseInt(scanner.nextLine());
 
 			System.out.println("Saisir id_fournisseur parmis la liste:");
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(4);
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
 			try {
@@ -71,7 +77,7 @@ public class BonGetMenu {
 			paramInt3 = Integer.parseInt(scanner.nextLine());
 
 			System.out.println("Saisir id_fournisseur parmis la liste:");
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(4);
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
 			try {

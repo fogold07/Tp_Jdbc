@@ -1,6 +1,7 @@
 package fr.diginamic.jdbc.service;
 
 
+import fr.diginamic.jdbc.entites.Fournisseur;
 import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
 import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
 
@@ -15,9 +16,11 @@ public interface FournisseurService {
 
 	void updateFournisseur(String ancienNom, String nouveauNom) throws FournisseurUpdateException;
 
-	void recupererFournisseurs();
+	void recupererFournisseurs(int paramSousMenu);
 
 	void supprimerFournisseur(String nomFournisseur) throws FournisseurNotFoundException;
 
 	void visualiser(String nomFournisseur) throws FournisseurNotFoundException;
+
+
 }

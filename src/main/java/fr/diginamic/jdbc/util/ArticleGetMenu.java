@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 import fr.diginamic.jdbc.service.ArticleService;
 import fr.diginamic.jdbc.service.FournisseurService;
+import fr.diginamic.jdbc.service.RunService;
 import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.FournisseurServiceImpl;
+import fr.diginamic.jdbc.service.impl.RunServiceImpl;
 
 /**
  * Classe qui exécute les actions sur la table Article en fonction de la saisie
@@ -18,6 +20,7 @@ public class ArticleGetMenu {
 
 	private static FournisseurService fournisseurSelection = new FournisseurServiceImpl();
 	private static ArticleService articleSelection = new ArticleServiceImpl();
+	private static RunService rsi = new RunServiceImpl();
 
 	/**
 	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
@@ -32,6 +35,10 @@ public class ArticleGetMenu {
 
 		Scanner scanner = new Scanner(System.in);
 		switch (sousMenu) {
+		case 0:
+			rsi.lancerMenu();
+			break;
+		
 		// création
 		case 1:
 			System.out.println("Saisir REF (alphanumérique): ");
@@ -44,7 +51,7 @@ public class ArticleGetMenu {
 			paramDbl = Double.parseDouble(scanner.nextLine());
 
 			System.out.println("Saisir id_fournisseur parmis la liste:");
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(4);
 			System.out.print("=> Votre choix : ");
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
@@ -64,7 +71,7 @@ public class ArticleGetMenu {
 			paramDbl = Double.parseDouble(scanner.nextLine());
 
 			System.out.println("Saisir nouvel id_fournisseur parmis la liste:");
-			fournisseurSelection.recupererFournisseurs();
+			fournisseurSelection.recupererFournisseurs(4);
 			System.out.print("=> Votre choix : ");
 			paramInt1 = Integer.parseInt(scanner.nextLine());
 
@@ -79,10 +86,12 @@ public class ArticleGetMenu {
 			paramStr1 = scanner.nextLine();
 			articleSelection.supprimerArticle(paramStr1);
 			break;
+			
 		// Liste complète
 		case 4:
 			articleSelection.recupererArticles(sousMenu);
 			break;
+			
 		// Visualisation élément
 		case 5:
 			System.out.println("Saisir la ref à visualiser: ");

@@ -5,9 +5,11 @@ import java.util.Scanner;
 import fr.diginamic.jdbc.service.ArticleService;
 import fr.diginamic.jdbc.service.BonService;
 import fr.diginamic.jdbc.service.CompoService;
+import fr.diginamic.jdbc.service.RunService;
 import fr.diginamic.jdbc.service.impl.ArticleServiceImpl;
 import fr.diginamic.jdbc.service.impl.BonServiceImpl;
 import fr.diginamic.jdbc.service.impl.CompoServiceImpl;
+import fr.diginamic.jdbc.service.impl.RunServiceImpl;
 
 /**
  * Classe qui exécute les actions sur la table Compo en fonction de la saisie de
@@ -21,6 +23,7 @@ public class CompoGetMenu {
 	private static ArticleService articleSelection = new ArticleServiceImpl();
 	private static BonService bonSelection = new BonServiceImpl();
 	private static CompoService compoSelection = new CompoServiceImpl();
+	private static RunService rsi = new RunServiceImpl();
 
 	/**
 	 * Méthode qui récupère et traite les informations pour le CRUD sur l'entité
@@ -36,6 +39,10 @@ public class CompoGetMenu {
 		Scanner scanner = new Scanner(System.in);
 		// 1 = Créer, 2 = Modifier, 3 = Supprimer, 4 = Liste complète
 		switch (sousMenu) {
+		case 0:
+			rsi.lancerMenu();
+			break;
+		
 		// création
 		case 1:
 			System.out.println("Saisir l'article (REF): ");

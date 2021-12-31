@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.diginamic.jdbc.dao.FournisseurDao;
 import fr.diginamic.jdbc.dao.impl.FournisseurDaoImpl;
+import fr.diginamic.jdbc.entites.Bon;
 import fr.diginamic.jdbc.entites.Fournisseur;
 import fr.diginamic.jdbc.exceptions.FournisseurNotFoundException;
 import fr.diginamic.jdbc.exceptions.FournisseurUpdateException;
@@ -63,22 +64,42 @@ public class FournisseurServiceImpl implements FournisseurService {
 
 	}
 
+	
 	/**
 	 * Méthode qui affiche la liste des fournisseurs.
 	 */
 	@Override
-	public void recupererFournisseurs() {
+	public void recupererFournisseurs(int paramSousMenu) {
+		List<Fournisseur> fournisseurs = new ArrayList<>();
 		try {
-			List<Fournisseur> fournisseurs = new ArrayList<>();
 			fournisseurs = fdi.extraire();
-			for (Fournisseur fournisseur : fournisseurs) {
-				System.out.println(fournisseur);
+			
+			switch (paramSousMenu) {
+			case 4:
+				for (Fournisseur fournisseur : fournisseurs) {
+					System.out.println(fournisseur);
+				}
+				break;
+
+			case 2:
+			case 3:
+			case 5:
+				for (Fournisseur fournisseur : fournisseurs) {
+					System.out.println("[Nom: " + fournisseur.getNom() + " ]");
+				}
+				break;
+			default:
+				System.err.println("WRONG VALUE !");
+				break;
 			}
+			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	/**
 	 * Méthode qui supprime le fournisseur saisi par l'User. Elle supprime également
 	 * tous les articles, les bons et les compos liés au fournisseur le cas échéant.
@@ -121,4 +142,6 @@ public class FournisseurServiceImpl implements FournisseurService {
 			e.printStackTrace();
 		}
 	}
+
+	
 }

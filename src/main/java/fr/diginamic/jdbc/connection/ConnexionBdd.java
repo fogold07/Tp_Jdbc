@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
- * A compléter avec l'utilisation de databa.properties
+ * Classe qui permet de gérer la connexion à la base de données.
  * 
  * @author chris
  *
